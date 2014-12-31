@@ -75,6 +75,23 @@ public class Utils {
     public static void Exit(String tag, String func, String message) { Log.d(tag, func + " Exit: " + message); }
     public static void Debug(String tag, String func, String message) { Log.d(tag, func + ": " + message); }
 
+    public static String getFormatDuration(int duration) {
+        String fmtDuration = null;
+        int hours = duration / Constants.DURATION_HOUR;
+        int minutes = (duration % Constants.DURATION_HOUR) / Constants.DURATION_MINUTE;
+        int seconds = duration % Constants.DURATION_MINUTE;
+
+        if (hours > 0) {
+            fmtDuration = String.format("%02dH %02dM %02dS", hours, minutes, seconds);
+        } else if (minutes > 0) {
+            fmtDuration = String.format("%02dM %02dS", minutes, seconds);
+        } else {
+            fmtDuration = String.format("%02dS", seconds);
+        }
+
+        return fmtDuration;
+    }
+
     public static boolean getJsonBoolean(JSONObject json, String name) throws JSONException{
         if(!json.isNull(name)){
             return json.getBoolean(name);

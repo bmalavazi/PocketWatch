@@ -18,59 +18,83 @@
             android:src="@drawable/carousel_test"
             android:layout_marginBottom="10dp"/>
 
-        <TextView
-            android:id="@+id/featured_shows_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FEATURED SHOWS"/>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginBottom="5dp"/>
-
-        <com.pocketwatch.demo.ui.HorizontalListView
-            android:id="@+id/featured_shows"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
 
-        <TextView
-            android:id="@+id/trending_episodes_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TRENDING EPISODES"/>
+            <TextView
+                android:id="@+id/featured_shows_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/featured_shows"
+                style="@style/SectionHeader"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginBottom="5dp"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="5dp"/>
 
-        <com.pocketwatch.demo.ui.HorizontalListView
-            android:id="@+id/trending_episodes"
+            <com.pocketwatch.demo.ui.HorizontalListView
+                android:id="@+id/featured_shows"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
 
-        <TextView
-            android:id="@+id/recommend_episodes_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/featured_shows"
-            android:text="RECOMMENDED FOR YOU"/>
+            <TextView
+                android:id="@+id/trending_episodes_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/featured_shows"
+                style="@style/SectionHeader"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginBottom="5dp"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="5dp"/>
 
-        <com.pocketwatch.demo.ui.HorizontalListView
-            android:id="@+id/recommended_episodes"
+            <com.pocketwatch.demo.ui.HorizontalListView
+                android:id="@+id/trending_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:id="@+id/recommend_episodes_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/featured_shows"
+                android:text="@string/recommended_for_you"
+                style="@style/SectionHeader"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="5dp"/>
+
+            <com.pocketwatch.demo.ui.HorizontalListView
+                android:id="@+id/recommended_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

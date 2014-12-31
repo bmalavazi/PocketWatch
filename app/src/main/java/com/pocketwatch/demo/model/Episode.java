@@ -26,11 +26,13 @@ public class Episode extends BaseModel {
     private static final String POCKETWATCH_EPISODE_TITLE = "title";
     private static final String POCKETWATCH_EPISODE_DESCRIPTION = "description";
     private static final String POCKETWATCH_EPISODE_DURATION = "duration";
-    private static final String POCKETWATCH_EPISODE_TITLE_IMAGE_URL = "title_image_url";
+    private static final String POCKETWATCH_EPISODE_TILE_IMAGE_URL = "tile_image_url";
     private static final String POCKETWATCH_EPISODE_PLACEHOLDER_IMAGE_URL = "placeholder_image_url";
     private static final String POCKETWATCH_EPISODE_VIDEO_URL = "video_url";
     private static final String POCKETWATCH_EPISODE_TAB_TYPES = "tab_types";
-    private static final String POCKETWATCH_EPISODE_SHOW_IS_UNVIEWED = "is_unviewed";
+    private static final String POCKETWATCH_EPISODE_IS_UNVIEWED = "is_unviewed";
+    private static final String POCKETWATCH_EPISODE_CREATED_AT = "created_at";
+    private static final String POCKETWATCH_EPISODE_UPDATED_AT = "updated_at";
 
     private int mId;
     private String mUuid;
@@ -39,11 +41,13 @@ public class Episode extends BaseModel {
     private String mTitle;
     private String mDescription;
     private int mDuration;
-    private String mTitleImageUrl;
+    private String mTileImageUrl;
     private String mPlaceholderUrl;
     private String mVideoUrl;
     private ArrayList<String> mTabArray = new ArrayList<String>();
     private boolean mIsViewed;
+    private String mCreatedAt;
+    private String mUpdatedAt;
 
     public static final Episode getEpisode(JSONObject json) {
         Episode episode = new Episode();
@@ -56,12 +60,14 @@ public class Episode extends BaseModel {
             episode.mTitle = Utils.getJsonString(json, POCKETWATCH_EPISODE_TITLE);
             episode.mDescription = Utils.getJsonString(json, POCKETWATCH_EPISODE_DESCRIPTION);
             episode.mDuration = Utils.getJsonInt(json, POCKETWATCH_EPISODE_DURATION);
-            episode.mTitleImageUrl = Utils.getJsonString(json, POCKETWATCH_EPISODE_TITLE_IMAGE_URL);
+            episode.mTileImageUrl = Utils.getJsonString(json, POCKETWATCH_EPISODE_TILE_IMAGE_URL);
             episode.mPlaceholderUrl = Utils.getJsonString(json, POCKETWATCH_EPISODE_PLACEHOLDER_IMAGE_URL);
             episode.mVideoUrl = Utils.getJsonString(json, POCKETWATCH_EPISODE_VIDEO_URL);
             JSONArray tabArray = Utils.getJsonArray(json, POCKETWATCH_EPISODE_TAB_TYPES);
             episode.mTabArray = getEpisodeTabs(tabArray);
-            episode.mIsViewed = Utils.getJsonBoolean(json, POCKETWATCH_EPISODE_SHOW_IS_UNVIEWED);
+            episode.mIsViewed = Utils.getJsonBoolean(json, POCKETWATCH_EPISODE_IS_UNVIEWED);
+            episode.mCreatedAt = Utils.getJsonString(json, POCKETWATCH_EPISODE_CREATED_AT);
+            episode.mUpdatedAt = Utils.getJsonString(json, POCKETWATCH_EPISODE_UPDATED_AT);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -176,8 +182,8 @@ public class Episode extends BaseModel {
         return mDuration;
     }
 
-    public String getTitleImageUrl() {
-        return mTitleImageUrl;
+    public String getTileImageUrl() {
+        return mTileImageUrl;
     }
 
     public String getPlaceholderUrl() {
@@ -193,6 +199,10 @@ public class Episode extends BaseModel {
     public boolean isViewed() {
         return mIsViewed;
     }
+
+    public String getCreationTime() { return mCreatedAt; }
+
+    public String getUpdateTime() { return mUpdatedAt; }
 
     @Override
     public ModelParser getModelParser() {

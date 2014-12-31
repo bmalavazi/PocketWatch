@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.pocketwatch.demo.model.Episode;
 import com.pocketwatch.demo.ui.R;
+import com.pocketwatch.demo.utils.Calendar;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 
@@ -33,7 +34,7 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
     private class ViewHolder {
         public ImageView image;
         public TextView title;
-        public TextView date;
+        public TextView dateDuration;
         public TextView description;
     }
 
@@ -70,7 +71,7 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
             viewHolder = new ViewHolder();
             viewHolder.image = (ImageView) convertView.findViewById(R.id.episode_image);
             viewHolder.title = (TextView) convertView.findViewById(R.id.episode_title);
-            viewHolder.date = (TextView) convertView.findViewById(R.id.episode_date);
+            viewHolder.dateDuration = (TextView) convertView.findViewById(R.id.episode_date_duration);
             viewHolder.description = (TextView) convertView.findViewById(R.id.episode_description);
 
             convertView.setTag(viewHolder);
@@ -79,9 +80,12 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
         }
 
         viewHolder.title.setText(episode.getTitle());
-        viewHolder.date.setText("PlaceHolder");
+        Calendar calendar = new Calendar(episode.getCreationTime());
+        viewHolder.dateDuration.setText(calendar.getDateString() + " * " + Utils.getFormatDuration(episode.getDuration()));
+        //Log.d(TAG, "Raw Duration: " + episode.getDuration());
+        //Log.d(TAG, "Duration: " + Utils.getFormatDuration(episode.getDuration()));
         viewHolder.description.setText(episode.getDescription());
-        imgUrls.add(episode.getPlaceholderUrl());
+        imgUrls.add(episode.getTileImageUrl());
         ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.carousel_test);
 
         Utils.Exit(TAG, func);

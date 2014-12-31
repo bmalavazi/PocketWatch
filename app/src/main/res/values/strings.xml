@@ -9,5 +9,11 @@
     <string name="tab_social">Social</string>
     <string name="tab_chat">Chat</string>
     <string name="tab_shop">Shop</string>
-
+    <string name="featured_shows">Featured Shows</string>
+    <string name="trending_episodes">Trending Episodes</string>
+    <string name="recommended_for_you">Recommended For You</string>
+    <string name="app_title_name">Pocket Watch</string>
+    <string name="first_unwatched_episode">First Unwatched Episode</string>
+    <string name="unwatched_episodes">Unwatched Episodes</string>
+    <string name="all_episodes">All Episodes</string>
 </resources>

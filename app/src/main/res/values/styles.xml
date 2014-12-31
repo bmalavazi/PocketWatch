@@ -13,4 +13,67 @@
         <attr name="android:fadingEdgeLength" />
     </declare-styleable>
 
+    <style name="Title">
+        <item name="android:textSize">23sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Header1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Header2">
+        <item name="android:textSize">13sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Header3">
+        <item name="android:textSize">11sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="SectionHeader">
+        <item name="android:textSize">11sp</item>
+        <item name="android:color">@color/material_grey</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="BodyText">
+        <item name="android:textSize">13sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="MetaData">
+        <item name="android:textSize">11sp</item>
+        <item name="android:color">@color/material_grey</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="UISelected">
+        <item name="android:textSize">16sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="UIUnSelected">
+        <item name="android:textSize">16sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="UIAction">
+        <item name="android:textSize">16sp</item>
+        <item name="android:color">@color/material_blue</item>
+        <item name="android:fontFamily">sans-serif-light-</item>
+    </style>
+
 </resources>

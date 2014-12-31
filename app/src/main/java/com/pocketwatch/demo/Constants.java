@@ -11,4 +11,7 @@ public class Constants {
     public static final String EPISODE_SOCIAL_MEDIA_TAB = "Social";
     public static final String EPISODE_SHOPPING_TAB = "Shop";
     public static final String EPISODE_CHAT_TAB = "Chat";
+
+    public static final int DURATION_HOUR = 3600;
+    public static final int DURATION_MINUTE = 60;
 }

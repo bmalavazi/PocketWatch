@@ -1,4 +1,4 @@
-package com.pocketwatch.demo.adapter;
+package com.pocketwatch.demo.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pocketwatch.demo.model.Episode;
+import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.ui.R;
 import com.pocketwatch.demo.utils.Calendar;
 import com.pocketwatch.demo.utils.ImageLoader;
@@ -86,7 +86,7 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
         //Log.d(TAG, "Duration: " + Utils.getFormatDuration(episode.getDuration()));
         viewHolder.description.setText(episode.getDescription());
         imgUrls.add(episode.getTileImageUrl());
-        ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.carousel_test);
+        ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.thumb_placeholder);
 
         Utils.Exit(TAG, func);
 

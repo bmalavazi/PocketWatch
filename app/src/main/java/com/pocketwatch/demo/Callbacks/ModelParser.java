@@ -1,4 +1,6 @@
-package com.pocketwatch.demo.model;
+package com.pocketwatch.demo.Callbacks;
+
+import com.pocketwatch.demo.models.BaseModel;
 
 import org.json.JSONObject;
 

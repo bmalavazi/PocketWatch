@@ -1,7 +1,5 @@
 package com.pocketwatch.demo.ui;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,9 +7,10 @@ import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.widget.VideoView;
 
+import com.pocketwatch.demo.Callbacks.EpisodeCallback;
 import com.pocketwatch.demo.Constants;
-import com.pocketwatch.demo.model.Episode;
-import com.pocketwatch.demo.model.JsonCallback;
+import com.pocketwatch.demo.models.Episode;
+import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.Utils;
 
@@ -23,7 +22,7 @@ import java.util.HashMap;
 /**
  * Created by bmalavazi on 12/25/14.
  */
-public class EpisodeActivity extends FragmentActivity implements FragmentTabHost.OnTabChangeListener {
+public class EpisodeActivity extends FragmentActivity implements FragmentTabHost.OnTabChangeListener, EpisodeCallback {
     private static final String TAG = "EpisodeActivity";
     public static final String EPISODE_UUID = "EPISODE_UUID";
     public static final String EPISODE_TABS = "EPISODE_TABS";
@@ -32,24 +31,6 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
     private Episode mEpisode;
     private FragmentTabHost mTabHost;
     private HashMap<String, TabSpec> mFragmentMap = new HashMap<String, TabSpec>();
-
-    ActionBar.TabListener mActionBarTabListener = new ActionBar.TabListener() {
-
-        @Override
-        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        }
-
-        @Override
-        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        }
-
-        @Override
-        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +55,7 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
                 Log.d(TAG, "Found TabSpec for: " + tab);
                 TabSpec tabSpec = mFragmentMap.get(tab);
                 mTabHost.addTab(mTabHost.newTabSpec(tabSpec.getTabTag()).setIndicator(getResources().getString(tabSpec.getTabIndicator())),
-                        tabSpec.getTabClass(), null);
+                                tabSpec.getTabClass(), null);
             }
         }
 
@@ -97,5 +78,10 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
     @Override
     public void onTabChanged(String s) {
 
+    }
+
+    @Override
+    public String getEpisodeUuid() {
+        return mUuid;
     }
 }

@@ -1,4 +1,6 @@
-package com.pocketwatch.demo.model;
+package com.pocketwatch.demo.models;
+
+import com.pocketwatch.demo.Callbacks.ModelParser;
 
 /**
  * Created by bmalavazi on 12/24/14.

@@ -3,7 +3,7 @@ package com.pocketwatch.demo.utils;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.pocketwatch.demo.model.JsonCallback;
+import com.pocketwatch.demo.Callbacks.JsonCallback;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;

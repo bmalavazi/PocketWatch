@@ -1,7 +1,7 @@
 package com.pocketwatch.demo.utils;
 
-import com.pocketwatch.demo.model.BaseModel;
-import com.pocketwatch.demo.model.ModelParser;
+import com.pocketwatch.demo.models.BaseModel;
+import com.pocketwatch.demo.Callbacks.ModelParser;
 
 import org.json.JSONObject;
 

@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.pocketwatch.demo.adapter.ShowAdapter;
-import com.pocketwatch.demo.model.Channel;
-import com.pocketwatch.demo.model.JsonCallback;
-import com.pocketwatch.demo.model.Show;
+import com.pocketwatch.demo.adapters.ShowAdapter;
+import com.pocketwatch.demo.models.Channel;
+import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.Utils;
 

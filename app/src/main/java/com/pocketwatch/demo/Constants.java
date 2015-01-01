@@ -12,6 +12,9 @@ public class Constants {
     public static final String EPISODE_SHOPPING_TAB = "Shop";
     public static final String EPISODE_CHAT_TAB = "Chat";
 
+    public static enum SOCIAL_ITEMS_PROVIDER { UNKNOWN, INSTAGRAM };
+    public static final String SOCIAL_ITEM_PROVIDER_INSTAGRAM = "instagram";
+
     public static final int DURATION_HOUR = 3600;
     public static final int DURATION_MINUTE = 60;
 }

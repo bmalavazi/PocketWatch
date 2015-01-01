@@ -1,7 +1,8 @@
-package com.pocketwatch.demo.model;
+package com.pocketwatch.demo.models;
 
 import android.util.Log;
 
+import com.pocketwatch.demo.Callbacks.ModelParser;
 import com.pocketwatch.demo.utils.Utils;
 
 import org.json.JSONArray;

@@ -12,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.pocketwatch.demo.adapter.EpisodeAdapter;
-import com.pocketwatch.demo.model.Episode;
-import com.pocketwatch.demo.model.JsonCallback;
-import com.pocketwatch.demo.model.Show;
+import com.pocketwatch.demo.adapters.EpisodeAdapter;
+import com.pocketwatch.demo.models.Episode;
+import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
@@ -139,7 +139,7 @@ public class ShowActivity extends Activity {
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
                 imgUrls.add(mShow.getBannerUrl());
-                ImageLoader.loadImage(mShowBanner, imgUrls, ImageLoader.getCache(), R.drawable.carousel_test);
+                ImageLoader.loadImage(mShowBanner, imgUrls, ImageLoader.getCache(), R.drawable.tile_placeholder);
                 mShowTitle.setText(mShow.getTitle());
                 mShowDescription.setText(mShow.getDescription());
             }

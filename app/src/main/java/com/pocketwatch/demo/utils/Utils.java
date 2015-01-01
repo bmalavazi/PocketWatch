@@ -20,6 +20,7 @@ public class Utils {
     private static final String POCKETWATCH_EPISODE = POCKETWATCH_API_BASE + "episodes/";
     private static final String POCKETWATCH_EPISODES = POCKETWATCH_API_BASE + "shows/";
     private static final String POCKETWATCH_SHOW = POCKETWATCH_API_BASE + "shows/";
+    private static final String POCKETWATCH_SOCIAL = "/social_items";
 
 
     private static HashMap<String, String> EPISODE_TAB_MAPS = new HashMap<String, String>();
@@ -52,6 +53,8 @@ public class Utils {
     public static String getEpisode(String uuid) {
         return POCKETWATCH_EPISODE + uuid;
     }
+
+    public static String getSocialItems(String uuid) { return getEpisode(uuid) +  POCKETWATCH_SOCIAL; }
 
     public static String getEpisodes(String uuid) {
         return POCKETWATCH_EPISODES + uuid + "/episodes";

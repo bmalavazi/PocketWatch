@@ -1,4 +1,4 @@
-package com.pocketwatch.demo.adapter;
+package com.pocketwatch.demo.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pocketwatch.demo.model.Show;
+import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.ui.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
@@ -76,7 +76,7 @@ public class ShowAdapter extends ArrayAdapter<Show> {
 
         viewHolder.text.setText(show.getTitle());
         imgUrls.add(show.getTileImageUrl());
-        ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.carousel_test);
+        ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.thumb_placeholder);
 
         Utils.Exit(TAG, func);
 

@@ -15,13 +15,32 @@ import java.util.HashMap;
  */
 public class Utils {
     private static final String TAG = "Utils";
+    /*
     private static final String POCKETWATCH_API_BASE = "http://104.200.20.15:3000/api/v1/";
     private static final String POCKETWATCH_SHOWS = POCKETWATCH_API_BASE + "channels?edges=shows";
     private static final String POCKETWATCH_EPISODE = POCKETWATCH_API_BASE + "episodes/";
     private static final String POCKETWATCH_EPISODES = POCKETWATCH_API_BASE + "shows/";
     private static final String POCKETWATCH_SHOW = POCKETWATCH_API_BASE + "shows/";
     private static final String POCKETWATCH_SOCIAL = "/social_items";
+    private static final String POCKETWATCH_PRODUCTS = "/products";
+    */
 
+    //private static final String POCKETWATCH_API_URL = "http://104.200.20.15:3000";
+    private static final String POCKETWATCH_API_URL = "http://getpocket.watch";
+    private static final String POCKETWATCH_API_BASE = POCKETWATCH_API_URL + "/api/v1/";
+    private static final String POCKETWATCH_API_CHANNELS = POCKETWATCH_API_BASE + "channels";
+    private static final String POCKETWATCH_API_CHANNEL = POCKETWATCH_API_BASE + "channels/%s";
+    private static final String POCKETWATCH_API_SHOWS = POCKETWATCH_API_BASE + "channels/%s/shows";
+    private static final String POCKETWATCH_API_SHOWS_RECOMMENDED = POCKETWATCH_API_BASE + "shows/recommended";
+    private static final String POCKETWATCH_API_SHOWS_FEATURED = POCKETWATCH_API_BASE + "shows/featured";
+    private static final String POCKETWATCH_API_SHOW = POCKETWATCH_API_BASE + "shows/%s";
+    private static final String POCKETWATCH_API_EPISODES = POCKETWATCH_API_BASE + "shows/%s/episodes";
+    private static final String POCKETWATCH_API_EPISODE = POCKETWATCH_API_BASE + "episodes/%s";
+    private static final String POCKETWATCH_API_EPISODES_TRENDING = POCKETWATCH_API_BASE + "episodes/trending";
+    private static final String POCKETWATCH_API_SHOW_CHANNELS = POCKETWATCH_API_BASE + "shows/%s/channels";
+    private static final String POCKETWATCH_API_PRODUCTS = POCKETWATCH_API_BASE + "episodes/%s/products";
+    private static final String POCKETWATCH_API_SOCIAL_ITEMS = POCKETWATCH_API_BASE + "episodes/%s/social_items";
+    private static final String POCKETWATCH_API_THUMBNAIL = POCKETWATCH_API_URL + "/%s";
 
     private static HashMap<String, String> EPISODE_TAB_MAPS = new HashMap<String, String>();
 
@@ -38,6 +57,86 @@ public class Utils {
         return null;
     }
 
+    public static String getThumbnail(String path) {
+        String url = POCKETWATCH_API_THUMBNAIL;
+        url = String.format(url, path);
+
+        return url;
+    }
+
+    public static String getChannels() {
+        return POCKETWATCH_API_CHANNELS;
+    }
+
+    public static String getChannel(String uuid) {
+        String url = POCKETWATCH_API_CHANNEL;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getRecommendedShows() {
+        return POCKETWATCH_API_SHOWS_RECOMMENDED;
+    }
+
+    public static String getFeaturedShows() {
+        return POCKETWATCH_API_SHOWS_FEATURED;
+    }
+
+    public static String getTrendingEpisodes() {
+        return POCKETWATCH_API_EPISODES_TRENDING;
+    }
+
+    public static String getChannelShows(String uuid) {
+        String url = POCKETWATCH_API_SHOWS;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getShow(String uuid) {
+        String url = POCKETWATCH_API_SHOW;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getShowEpisodes(String uuid) {
+        String url = POCKETWATCH_API_EPISODES;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getEpisode(String uuid) {
+        String url = POCKETWATCH_API_EPISODE;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getShowChannels(String uuid) {
+        String url = POCKETWATCH_API_SHOW_CHANNELS;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getEpisodeSocialItems(String uuid) {
+        String url = POCKETWATCH_API_SOCIAL_ITEMS;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String getEpisodeProducts(String uuid) {
+        String url = POCKETWATCH_API_PRODUCTS;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    /*
     public static String getShows() {
         return POCKETWATCH_SHOWS;
     }
@@ -56,9 +155,12 @@ public class Utils {
 
     public static String getSocialItems(String uuid) { return getEpisode(uuid) +  POCKETWATCH_SOCIAL; }
 
+    public static String getProducts(String uuid) { return getEpisode(uuid) +  POCKETWATCH_PRODUCTS; }
+
     public static String getEpisodes(String uuid) {
         return POCKETWATCH_EPISODES + uuid + "/episodes";
     }
+    */
 
     public static boolean isEmpty(String text) {
         if (null == text ||

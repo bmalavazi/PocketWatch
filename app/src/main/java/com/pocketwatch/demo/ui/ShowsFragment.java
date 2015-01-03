@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.pocketwatch.demo.adapters.ShowAdapter;
-import com.pocketwatch.demo.models.Channel;
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.adapters.ShowAdapter;
+import com.pocketwatch.demo.adapters.TrendingEpisodeAdapter;
+import com.pocketwatch.demo.models.Channel;
+import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.Utils;
@@ -30,33 +32,59 @@ public class ShowsFragment extends BaseTabFragment {
     private HorizontalListView mTrendingView;
     private HorizontalListView mRecommendedView;
     private List<Show> mFeaturedList = new ArrayList<Show>();
-    private List<Show> mTrendingList = new ArrayList<Show>();
+    private List<Episode> mTrendingList = new ArrayList<Episode>();
     private List<Show> mRecommendedList = new ArrayList<Show>();
+    private List<Channel> mChannelList = new ArrayList<Channel>();
+    private List<String> mChannelUuidList = new ArrayList<String>();
     private ShowAdapter mFeaturedAdapter;
-    private ShowAdapter mTrendingAdapter;
+    private TrendingEpisodeAdapter mTrendingAdapter;
     private ShowAdapter mRecommendedAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final String func = "onCreate()";
+
+        Utils.Entry(TAG, func);
 
         mFeaturedAdapter = new ShowAdapter(getActivity(), R.id.show, mFeaturedList);
-        mTrendingAdapter = new ShowAdapter(getActivity(), R.id.show, mTrendingList);
+        mTrendingAdapter = new TrendingEpisodeAdapter(getActivity(), R.id.trending, mTrendingList);
         mRecommendedAdapter = new ShowAdapter(getActivity(), R.id.show, mRecommendedList);
 
         new HttpRequestTask(new JsonCallback() {
             @Override
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
-                List<Channel> channels = Channel.getChannels(json);
-                mFeaturedList = channels.get(0).getShows();
+                mFeaturedList = Show.getShows(json);
                 for (Show show : mFeaturedList)
                     mFeaturedAdapter.add(show);
                 mFeaturedAdapter.notifyDataSetChanged();
             }
-        }).execute(Utils.getShows());
+        }).execute(Utils.getFeaturedShows());
 
+        new HttpRequestTask(new JsonCallback() {
+            @Override
+            public void setJsonObject(JSONObject json) {
+                Log.d(TAG, "setJsonObject()");
+                mTrendingList = Episode.getEpisodes(json);
+                for (Episode episode : mTrendingList)
+                    mTrendingAdapter.add(episode);
+                mTrendingAdapter.notifyDataSetChanged();
+            }
+        }).execute(Utils.getTrendingEpisodes());
 
+        new HttpRequestTask(new JsonCallback() {
+            @Override
+            public void setJsonObject(JSONObject json) {
+                Log.d(TAG, "setJsonObject()");
+                mRecommendedList = Show.getShows(json);
+                for (Show show : mRecommendedList)
+                    mRecommendedAdapter.add(show);
+                mRecommendedAdapter.notifyDataSetChanged();
+            }
+        }).execute(Utils.getRecommendedShows());
+
+        Utils.Exit(TAG, func);
     }
 
     @Override
@@ -85,6 +113,16 @@ public class ShowsFragment extends BaseTabFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 final String func = "Trending Episodes: onItemClick()";
                 Utils.Entry(TAG, func, "Clicked position: " + position);
+
+                Intent intent = new Intent(getActivity(), EpisodeActivity.class);
+
+                TrendingEpisodeAdapter episodeAdapter = (TrendingEpisodeAdapter) adapterView.getAdapter();
+                Episode episode = (Episode) episodeAdapter.getItem(position);
+                ArrayList<String> tabArray = episode.getTabArray();
+
+                intent.putExtra(EpisodeActivity.EPISODE_UUID, episode.getUuid());
+                intent.putStringArrayListExtra(EpisodeActivity.EPISODE_TABS, tabArray);
+                startActivity(intent);
             }
         });
         mRecommendedView = (HorizontalListView) mView.findViewById(R.id.recommended_episodes);
@@ -93,6 +131,14 @@ public class ShowsFragment extends BaseTabFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 final String func = "Recommended Episodes: onItemClick()";
                 Utils.Entry(TAG, func, "Clicked position: " + position);
+
+                Intent intent = new Intent(getActivity(), ShowActivity.class);
+
+                ShowAdapter showAdapter = (ShowAdapter) adapterView.getAdapter();
+                Show show = (Show) showAdapter.getItem(position);
+
+                intent.putExtra(ShowActivity.SHOW_UUID, show.getUuid());
+                startActivity(intent);
             }
         });
 

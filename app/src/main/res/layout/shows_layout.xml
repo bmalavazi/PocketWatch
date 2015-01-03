@@ -54,7 +54,7 @@
                 android:id="@+id/trending_episodes_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/featured_shows"
+                android:text="@string/trending_episodes"
                 style="@style/SectionHeader"/>
 
             <View
@@ -77,10 +77,9 @@
             android:paddingLeft="20dp">
 
             <TextView
-                android:id="@+id/recommend_episodes_header"
+                android:id="@+id/recommend_shows_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/featured_shows"
                 android:text="@string/recommended_for_you"
                 style="@style/SectionHeader"/>
 

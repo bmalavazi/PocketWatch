@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pocketwatch.demo.models.Show;
+import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.ui.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
@@ -17,32 +17,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by bmalavazi on 12/23/14.
+ * Created by bmalavazi on 1/3/15.
  */
-public class ShowAdapter extends ArrayAdapter<Show> {
-    private static final String TAG = "ShowAdapter";
-    private List<Show> mShows;
+public class TrendingEpisodeAdapter extends ArrayAdapter<Episode> {
+    private static final String TAG = "TrendingEpisodeAdapter";
+    private List<Episode> mEpisodes;
     private Context mContext;
 
-    public ShowAdapter(Context context, int viewId, List<Show> shows) {
-        super(context, viewId, shows);
-        this.mShows = shows;
+    public TrendingEpisodeAdapter(Context context, int viewId, List<Episode> episodes) {
+        super(context, viewId, episodes);
+        this.mEpisodes = episodes;
         this.mContext = context;
     }
 
     private class ViewHolder {
         public ImageView image;
-        public TextView text;
+        public TextView episodeTitle;
+        public TextView showTitle;
     }
 
     @Override
     public int getCount() {
-        return mShows.size();
+        return mEpisodes.size();
     }
 
     @Override
-    public Show getItem(int position) {
-        return mShows.get(position);
+    public Episode getItem(int position) {
+        return mEpisodes.get(position);
     }
 
     @Override
@@ -58,25 +59,26 @@ public class ShowAdapter extends ArrayAdapter<Show> {
 
         Utils.Entry(TAG, func, "Position: " + position);
 
-        Show show = mShows.get(position);
+        Episode episode = mEpisodes.get(position);
 
         if (null == convertView) {
             LayoutInflater inflater = (LayoutInflater)
                     mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.shows_item, viewGroup, false);
+            convertView = inflater.inflate(R.layout.trending_episodes_item, viewGroup, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.show_image);
-            viewHolder.text = (TextView) convertView.findViewById(R.id.show_text);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.trending_episode_image);
+            viewHolder.episodeTitle = (TextView) convertView.findViewById(R.id.trending_episode_title);
+            viewHolder.showTitle = (TextView) convertView.findViewById(R.id.trending_episode_show_title);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.text.setText(show.getTitle());
-        //imgUrls.add(show.getTileImageUrl());
-        for (Show.ShowThumbnail thumbnail : show.getThumbnailList())
+        viewHolder.episodeTitle.setText(episode.getTitle());
+        viewHolder.showTitle.setText(episode.getShowTitle());
+        for (Episode.EpisodeThumbnail thumbnail : episode.getThumbnailList())
             imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
         ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.thumb_placeholder);
 
@@ -92,6 +94,6 @@ public class ShowAdapter extends ArrayAdapter<Show> {
 
     @Override
     public boolean isEmpty() {
-        return mShows.isEmpty();
+        return mEpisodes.isEmpty();
     }
 }

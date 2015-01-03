@@ -70,8 +70,10 @@ public class ShowActivity extends Activity {
 
                 EpisodeAdapter episodeAdapter = (EpisodeAdapter) adapterView.getAdapter();
                 Episode episode = (Episode) episodeAdapter.getItem(position);
+                ArrayList<String> tabArray = episode.getTabArray();
 
                 intent.putExtra(EpisodeActivity.EPISODE_UUID, episode.getUuid());
+                intent.putStringArrayListExtra(EpisodeActivity.EPISODE_TABS, tabArray);
                 startActivity(intent);
             }
         });
@@ -88,8 +90,10 @@ public class ShowActivity extends Activity {
 
                 EpisodeAdapter episodeAdapter = (EpisodeAdapter) adapterView.getAdapter();
                 Episode episode = (Episode) episodeAdapter.getItem(position);
+                ArrayList<String> tabArray = episode.getTabArray();
 
                 intent.putExtra(EpisodeActivity.EPISODE_UUID, episode.getUuid());
+                intent.putStringArrayListExtra(EpisodeActivity.EPISODE_TABS, tabArray);
                 startActivity(intent);
             }
         });
@@ -116,6 +120,8 @@ public class ShowActivity extends Activity {
                 EpisodeAdapter episodeAdapter = (EpisodeAdapter) adapterView.getAdapter();
                 Episode episode = (Episode) episodeAdapter.getItem(position);
                 ArrayList<String> tabArray = episode.getTabArray();
+
+                Utils.Debug(TAG, func, "Tab Array Size: " + tabArray.size());
 
                 intent.putExtra(EpisodeActivity.EPISODE_UUID, episode.getUuid());
                 intent.putStringArrayListExtra(EpisodeActivity.EPISODE_TABS, tabArray);
@@ -156,6 +162,6 @@ public class ShowActivity extends Activity {
                     mAllAdapter.add(episode);
                 mAllAdapter.notifyDataSetChanged();
             }
-        }).execute(Utils.getEpisodes(mUuid));
+        }).execute(Utils.getShowEpisodes(mUuid));
     }
 }

@@ -35,6 +35,9 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final String func = "onCreate()";
+
+        Utils.Entry(TAG, func);
 
         setContentView(R.layout.episode_activity);
 
@@ -72,6 +75,8 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
                 mVideoView.start();
             }
         }).execute(Utils.getEpisode(mUuid));
+
+        Utils.Exit(TAG, func);
     }
 
 

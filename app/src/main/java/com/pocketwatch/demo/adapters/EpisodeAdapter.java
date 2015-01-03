@@ -85,7 +85,9 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
         //Log.d(TAG, "Raw Duration: " + episode.getDuration());
         //Log.d(TAG, "Duration: " + Utils.getFormatDuration(episode.getDuration()));
         viewHolder.description.setText(episode.getDescription());
-        imgUrls.add(episode.getTileImageUrl());
+        //imgUrls.add(episode.getTileImageUrl());
+        for (Episode.EpisodeThumbnail thumbnail : episode.getThumbnailList())
+            imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
         ImageLoader.loadImage(viewHolder.image, imgUrls, ImageLoader.getCache(), R.drawable.thumb_placeholder);
 
         Utils.Exit(TAG, func);

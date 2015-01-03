@@ -18,6 +18,9 @@ public class Calendar {
     private String mFormattedDateString;
 
     public Calendar(String date) {
+        final String func = "Calendar()";
+        Utils.Entry(TAG, func);
+
         mDateString = date;
         mSdf = new SimpleDateFormat(mFormat);
         try {
@@ -28,6 +31,8 @@ public class Calendar {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        Utils.Exit(TAG, func);
     }
 
     public String getDateString() {

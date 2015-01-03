@@ -275,7 +275,7 @@ public class SocialItem {
                     }
                 }
             } catch (Exception e){
-                Utils.Debug(TAG, func, "unable to build array list of episodes");
+                Utils.Debug(TAG, func, "unable to build array list of social items");
                 Utils.Debug(TAG, func, e.getMessage());
             }
         }

@@ -26,8 +26,18 @@ public class Show extends BaseModel {
     private static final String POCKETWATCH_SHOW_DESCRIPTION = "description";
     private static final String POCKETWATCH_SHOW_TILE_IMAGE_URL = "tile_image_url";
     private static final String POCKETWATCH_SHOW_BANNER_URL = "banner_url";
+    private static final String POCKETWATCH_SHOW_THUMBNAILS = "thumbnails";
     private static final String POCKETWATCH_SHOW_EPISODE_COUNT = "episode_count";
     private static final String POCKETWATCH_SHOW_UNVIEWED_CONTENT = "has_unviewed_content";
+
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_NAME = "name";
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_URL = "url";
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_WIDTH = "width";
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_HEIGHT = "height";
+
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_IPHONE_5 = "iphone5";
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_IPHONE_6 = "iphone6";
+    private static final String POCKETWATCH_SHOW_THUMBNAIL_IPHONE_6p = "iphone6p";
 
     private int mId;
     private String mUuid;
@@ -35,8 +45,57 @@ public class Show extends BaseModel {
     private String mDescription;
     private String mTileImageUrl;
     private String mBannerUrl;
+    private JSONArray mThumbnails;
+    private List<ShowThumbnail> mThumbnailList = new ArrayList<ShowThumbnail>();
     private int mEpisodeCount;
     private boolean mUnviewedContent;
+
+    public static class ShowThumbnail {
+        private String mName;
+        private String mUrl;
+        private int mWidth;
+        private int mHeight;
+
+        public ShowThumbnail(String name, String url, int width, int height) {
+            this.mName = name;
+            this.mUrl = url;
+            this.mWidth = width;
+            this.mHeight = height;
+        }
+
+        public String getThumbnailName() { return mName; }
+        public String getThumbnailUrl() { return mUrl; }
+        public int getThumbnailWidth() { return mWidth; }
+        public int getThumbnailHeight() { return mHeight; }
+    }
+
+    public static final List<ShowThumbnail> getThumbnails(JSONArray jar){
+        List<ShowThumbnail> list = new ArrayList<ShowThumbnail>();
+        final String func = "getThumbnails(JSONArray)";
+
+        Utils.Entry(TAG, func);
+
+        if (jar != null) {
+            try {
+                for (int i = 0; i < jar.length(); i++){
+                    JSONObject json = ((JSONObject) jar.get(i));
+                    if(json != null) {
+                        list.add(new ShowThumbnail(Utils.getJsonString(json, POCKETWATCH_SHOW_THUMBNAIL_NAME),
+                                                   Utils.getJsonString(json, POCKETWATCH_SHOW_THUMBNAIL_URL),
+                                                   Utils.getJsonInt(json, POCKETWATCH_SHOW_THUMBNAIL_WIDTH),
+                                                   Utils.getJsonInt(json, POCKETWATCH_SHOW_THUMBNAIL_HEIGHT)));
+                    }
+                }
+            } catch (Exception e){
+                Utils.Debug(TAG, func, "unable to build array list of thumbnails");
+                Utils.Debug(TAG, func, e.getMessage());
+            }
+        }
+
+        Utils.Exit(TAG, func);
+
+        return list;
+    }
 
     public static final Show getShow(JSONObject json) {
         Show show = new Show();
@@ -48,6 +107,8 @@ public class Show extends BaseModel {
             show.mDescription = Utils.getJsonString(json, POCKETWATCH_SHOW_DESCRIPTION);
             show.mTileImageUrl = Utils.getJsonString(json, POCKETWATCH_SHOW_TILE_IMAGE_URL);
             show.mBannerUrl = Utils.getJsonString(json, POCKETWATCH_SHOW_BANNER_URL);
+            show.mThumbnails = Utils.getJsonArray(json, POCKETWATCH_SHOW_THUMBNAILS);
+            show.mThumbnailList = getThumbnails(show.mThumbnails);
             show.mEpisodeCount = Utils.getJsonInt(json, POCKETWATCH_SHOW_EPISODE_COUNT);
             show.mUnviewedContent = Utils.getJsonBoolean(json, POCKETWATCH_SHOW_UNVIEWED_CONTENT);
         } catch (Exception e) {
@@ -129,6 +190,8 @@ public class Show extends BaseModel {
     public boolean isUnviewedContent() {
         return mUnviewedContent;
     }
+
+    public List<ShowThumbnail> getThumbnailList() { return mThumbnailList; }
 
     @Override
     public ModelParser getModelParser() {

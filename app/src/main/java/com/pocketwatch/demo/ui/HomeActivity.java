@@ -2,6 +2,9 @@ package com.pocketwatch.demo.ui;
 
 import android.os.Bundle;
 
+import com.pocketwatch.demo.models.Channel;
+import com.pocketwatch.demo.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +13,29 @@ import java.util.List;
  */
 public class HomeActivity extends BaseTabActivity {
     private static final String TAG = "HomeActivity";
+    private List<Channel> mChannelList = new ArrayList<Channel>();
+    private List<String> mChannelUuidList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final String func = "onCreate()";
 
+        Utils.Entry(TAG, func);
+/*
+        new HttpRequestTask(new JsonCallback() {
+            @Override
+            public void setJsonObject(JSONObject json) {
+                Log.d(TAG, "setJsonObject()");
+                mChannelList = Channel.getChannels(json);
+
+                for (Channel channel : mChannelList) {
+                    mChannelUuidList.add(channel.getUuid());
+                }
+            }
+        }).execute(Utils.getChannels());
+*/
+        Utils.Exit(TAG, func);
     }
 
     @Override

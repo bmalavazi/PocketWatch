@@ -53,7 +53,8 @@ public class SocialFragment extends Fragment {
                     mAdapter.add(socialItem);
                 mAdapter.notifyDataSetChanged();
             }
-        }).execute(Utils.getSocialItems(mUuid));
+        }).execute(Utils.getEpisodeSocialItems(mUuid));
+
     }
 
     @Override

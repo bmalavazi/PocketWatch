@@ -58,7 +58,7 @@ public class Channel extends BaseModel {
                     }
                 }
             } catch (Exception e){
-                Log.e(TAG, "unable to build array list of shows", e);
+                Log.e(TAG, "unable to build array list of channels", e);
             }
         }
         return list;

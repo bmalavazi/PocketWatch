@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.adapters.ShowAdapter;
 import com.pocketwatch.demo.adapters.TrendingEpisodeAdapter;
-import com.pocketwatch.demo.models.Channel;
 import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.utils.HttpRequestTask;
@@ -34,8 +33,6 @@ public class ShowsFragment extends BaseTabFragment {
     private List<Show> mFeaturedList = new ArrayList<Show>();
     private List<Episode> mTrendingList = new ArrayList<Episode>();
     private List<Show> mRecommendedList = new ArrayList<Show>();
-    private List<Channel> mChannelList = new ArrayList<Channel>();
-    private List<String> mChannelUuidList = new ArrayList<String>();
     private ShowAdapter mFeaturedAdapter;
     private TrendingEpisodeAdapter mTrendingAdapter;
     private ShowAdapter mRecommendedAdapter;

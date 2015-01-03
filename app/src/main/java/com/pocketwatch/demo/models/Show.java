@@ -27,6 +27,7 @@ public class Show extends BaseModel {
     private static final String POCKETWATCH_SHOW_TILE_IMAGE_URL = "tile_image_url";
     private static final String POCKETWATCH_SHOW_BANNER_URL = "banner_url";
     private static final String POCKETWATCH_SHOW_THUMBNAILS = "thumbnails";
+    private static final String POCKETWATCH_SHOW_BANNERS = "banners";
     private static final String POCKETWATCH_SHOW_EPISODE_COUNT = "episode_count";
     private static final String POCKETWATCH_SHOW_UNVIEWED_CONTENT = "has_unviewed_content";
 
@@ -46,7 +47,9 @@ public class Show extends BaseModel {
     private String mTileImageUrl;
     private String mBannerUrl;
     private JSONArray mThumbnails;
+    private JSONArray mBanners;
     private List<ShowThumbnail> mThumbnailList = new ArrayList<ShowThumbnail>();
+    private List<ShowThumbnail> mBannerList = new ArrayList<ShowThumbnail>();
     private int mEpisodeCount;
     private boolean mUnviewedContent;
 
@@ -109,6 +112,8 @@ public class Show extends BaseModel {
             show.mBannerUrl = Utils.getJsonString(json, POCKETWATCH_SHOW_BANNER_URL);
             show.mThumbnails = Utils.getJsonArray(json, POCKETWATCH_SHOW_THUMBNAILS);
             show.mThumbnailList = getThumbnails(show.mThumbnails);
+            show.mBanners = Utils.getJsonArray(json, POCKETWATCH_SHOW_BANNERS);
+            show.mBannerList = getThumbnails(show.mBanners);
             show.mEpisodeCount = Utils.getJsonInt(json, POCKETWATCH_SHOW_EPISODE_COUNT);
             show.mUnviewedContent = Utils.getJsonBoolean(json, POCKETWATCH_SHOW_UNVIEWED_CONTENT);
         } catch (Exception e) {
@@ -192,6 +197,8 @@ public class Show extends BaseModel {
     }
 
     public List<ShowThumbnail> getThumbnailList() { return mThumbnailList; }
+
+    public List<ShowThumbnail> getBannerList() { return mBannerList; }
 
     @Override
     public ModelParser getModelParser() {

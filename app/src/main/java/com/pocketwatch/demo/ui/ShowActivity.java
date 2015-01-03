@@ -144,7 +144,9 @@ public class ShowActivity extends Activity {
                 mShow = Show.getSingleShow(json);
 
                 ArrayList<String> imgUrls = new ArrayList<String>();
-                imgUrls.add(mShow.getBannerUrl());
+                //imgUrls.add(mShow.getBannerUrl());
+                for (Show.ShowThumbnail thumbnail : mShow.getBannerList())
+                    imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
                 ImageLoader.loadImage(mShowBanner, imgUrls, ImageLoader.getCache(), R.drawable.tile_placeholder);
                 mShowTitle.setText(mShow.getTitle());
                 mShowDescription.setText(mShow.getDescription());

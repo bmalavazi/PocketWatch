@@ -13,6 +13,7 @@ import com.pocketwatch.demo.ui.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         final String func = "getView()";
         ViewHolder viewHolder = null;
+        ArrayList<String> imgUrls = new ArrayList<String>();
 
         Utils.Entry(TAG, func, "Position: " + position);
 
@@ -81,8 +83,11 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Utils.Debug(TAG, func, "Price: " + product.getPrice());
         viewHolder.price.setText(product.getPrice());
 
+        for (Product.ProductThumbnail thumbnail : product.getThumbnailList())
+            imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
+
         ImageLoader.loadImage(viewHolder.image,
-                              product.getItemImageUrl(),
+                              imgUrls,
                               ImageLoader.getCache(),
                               R.drawable.thumb_placeholder);
 

@@ -1,8 +1,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/show_scroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 
     <LinearLayout
+        android:id="@+id/show_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -15,110 +18,45 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingBottom="20dp">
+        <TextView
+            android:id="@+id/show_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Header1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"/>
 
-            <TextView
-                android:id="@+id/show_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Header1"
-                android:layout_marginBottom="10dp"/>
+        <TextView
+            android:id="@+id/pocket_watch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_title_name"
+            style="@style/Header2"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"/>
 
-            <TextView
-                android:id="@+id/pocket_watch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_title_name"
-                style="@style/Header2"
-                android:layout_marginBottom="10dp"/>
+        <TextView
+            android:id="@+id/show_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/show_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/all_episodes_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_episodes"
+            style="@style/SectionHeader"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp">
-
-            <TextView
-                android:id="@+id/unwatched_episode_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/first_unwatched_episode"
-                style="@style/SectionHeader"/>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginBottom="5dp"/>
-
-            <ListView
-                android:id="@+id/unwatched_episode_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp">
-
-            <TextView
-                android:id="@+id/unwatched_episodes_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/unwatched_episodes"
-                style="@style/SectionHeader"/>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginBottom="5dp"/>
-
-            <ListView
-                android:id="@+id/unwatched_episodes_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp">
-
-            <TextView
-                android:id="@+id/all_episodes_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all_episodes"
-                style="@style/SectionHeader"/>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_marginBottom="5dp"/>
-
-            <ListView
-                android:id="@+id/all_episodes_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"/>
 
     </LinearLayout>
 

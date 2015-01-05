@@ -42,11 +42,17 @@ public class SocialFragment extends Fragment {
         mAdapter = new SocialItemAdapter(getActivity(), R.id.social, mSocialItems);
 
         Utils.Debug(TAG, func, "UUID: " + mUuid);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         new HttpRequestTask(new JsonCallback() {
             @Override
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
+                mAdapter.clear();
                 mSocialItems = SocialItem.getSocialItems(json);
 
                 for (SocialItem socialItem : mSocialItems)
@@ -54,7 +60,6 @@ public class SocialFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
             }
         }).execute(Utils.getEpisodeSocialItems(mUuid));
-
     }
 
     @Override

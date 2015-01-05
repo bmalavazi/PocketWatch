@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/social"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="20dp">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/social_header"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp">
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:id="@+id/social_avatar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:gravity="center"/>
+            android:src="@drawable/thumb_placeholder"
+            android:layout_centerVertical="true"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp">
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_toEndOf="@id/social_avatar"
+            android:layout_toRightOf="@id/social_avatar">
 
             <TextView
                 android:id="@+id/social_creator"
@@ -37,19 +40,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/social_creator"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 style="@style/Header2"
                 android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/social_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/social_header"
+        android:layout_marginTop="20dp"
         android:scaleType="centerCrop"
-        android:layout_gravity="center"/>
+        android:src="@drawable/thumb_placeholder"
+        android:layout_centerHorizontal="true"/>
 
-</LinearLayout>
+</RelativeLayout>

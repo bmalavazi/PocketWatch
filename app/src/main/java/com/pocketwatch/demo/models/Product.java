@@ -34,6 +34,7 @@ public class Product {
     private static final String POCKETWATCH_PRODUCT_CREATED_AT = "created_at";
     private static final String POCKETWATCH_PRODUCT_UPDATED_AT = "updated_at";
 
+    private static final String POCKETWATCH_PRODUCT_THUMBNAIL_NAME = "name";
     private static final String POCKETWATCH_PRODUCT_THUMBNAIL_URL = "url";
     private static final String POCKETWATCH_PRODUCT_THUMBNAIL_WIDTH = "width";
     private static final String POCKETWATCH_PRODUCT_THUMBNAIL_HEIGHT = "height";
@@ -49,9 +50,57 @@ public class Product {
     private String mPurchaseUrl;
     private String mItemImageUrl;
     private String mPrice;
-    private JSONObject mThumbnails;
+    private JSONArray mThumbnails;
+    private List<ProductThumbnail> mThumbnailList = new ArrayList<ProductThumbnail>();
     private String mCreatedAt;
     private String mUpdatedAt;
+
+    public static class ProductThumbnail {
+        private String mName;
+        private String mUrl;
+        private int mWidth;
+        private int mHeight;
+
+        public ProductThumbnail(String name, String url, int width, int height) {
+            this.mName = name;
+            this.mUrl = url;
+            this.mWidth = width;
+            this.mHeight = height;
+        }
+
+        public String getThumbnailName() { return mName; }
+        public String getThumbnailUrl() { return mUrl; }
+        public int getThumbnailWidth() { return mWidth; }
+        public int getThumbnailHeight() { return mHeight; }
+    }
+
+    public static final List<ProductThumbnail> getThumbnails(JSONArray jar){
+        List<ProductThumbnail> list = new ArrayList<ProductThumbnail>();
+        final String func = "getThumbnails(JSONArray)";
+
+        Utils.Entry(TAG, func);
+
+        if (jar != null) {
+            try {
+                for (int i = 0; i < jar.length(); i++){
+                    JSONObject json = ((JSONObject) jar.get(i));
+                    if(json != null) {
+                        list.add(new ProductThumbnail(Utils.getJsonString(json, POCKETWATCH_PRODUCT_THUMBNAIL_NAME),
+                                Utils.getJsonString(json, POCKETWATCH_PRODUCT_THUMBNAIL_URL),
+                                Utils.getJsonInt(json, POCKETWATCH_PRODUCT_THUMBNAIL_WIDTH),
+                                Utils.getJsonInt(json, POCKETWATCH_PRODUCT_THUMBNAIL_HEIGHT)));
+                    }
+                }
+            } catch (Exception e){
+                Utils.Debug(TAG, func, "unable to build array list of thumbnails");
+                Utils.Debug(TAG, func, e.getMessage());
+            }
+        }
+
+        Utils.Exit(TAG, func);
+
+        return list;
+    }
 
     public int getId() {
         return mId;
@@ -97,7 +146,7 @@ public class Product {
         return mPrice;
     }
 
-    public JSONObject getThumbnails() {
+    public JSONArray getThumbnails() {
         return mThumbnails;
     }
 
@@ -108,6 +157,8 @@ public class Product {
     public String getUpdatedAt() {
         return mUpdatedAt;
     }
+
+    public List<ProductThumbnail> getThumbnailList() { return mThumbnailList; }
 
     public static final Product getProduct(JSONObject json) {
         Product product = new Product();
@@ -124,7 +175,8 @@ public class Product {
             product.mPurchaseUrl = Utils.getJsonString(json, POCKETWATCH_PRODUCT_PURCHASE_URL);
             product.mItemImageUrl = Utils.getJsonString(json, POCKETWATCH_PRODUCT_ITEM_IMAGE_URL);
             product.mPrice = Utils.getJsonString(json, POCKETWATCH_PRODUCT_PRICE);
-            product.mThumbnails = Utils.getJsonObject(json, POCKETWATCH_PRODUCT_THUMBNAILS);
+            product.mThumbnails = Utils.getJsonArray(json, POCKETWATCH_PRODUCT_THUMBNAILS);
+            product.mThumbnailList = getThumbnails(product.mThumbnails);
             product.mCreatedAt = Utils.getJsonString(json, POCKETWATCH_PRODUCT_CREATED_AT);
             product.mUpdatedAt = Utils.getJsonString(json, POCKETWATCH_PRODUCT_UPDATED_AT);
         } catch (Exception e) {

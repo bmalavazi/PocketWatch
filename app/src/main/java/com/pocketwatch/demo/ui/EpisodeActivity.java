@@ -8,9 +8,9 @@ import android.util.Log;
 import android.widget.VideoView;
 
 import com.pocketwatch.demo.Callbacks.EpisodeCallback;
+import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.Constants;
 import com.pocketwatch.demo.models.Episode;
-import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.Utils;
 
@@ -64,6 +64,13 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
 
         mVideoView = (VideoView) findViewById(R.id.videoView);
 
+        Utils.Exit(TAG, func);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         new HttpRequestTask(new JsonCallback() {
             @Override
             public void setJsonObject(JSONObject json) {
@@ -75,10 +82,7 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
                 mVideoView.start();
             }
         }).execute(Utils.getEpisode(mUuid));
-
-        Utils.Exit(TAG, func);
     }
-
 
     @Override
     public void onTabChanged(String s) {

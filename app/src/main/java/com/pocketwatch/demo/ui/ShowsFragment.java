@@ -48,10 +48,18 @@ public class ShowsFragment extends BaseTabFragment {
         mTrendingAdapter = new TrendingEpisodeAdapter(getActivity(), R.id.trending, mTrendingList);
         mRecommendedAdapter = new ShowAdapter(getActivity(), R.id.show, mRecommendedList);
 
+        Utils.Exit(TAG, func);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         new HttpRequestTask(new JsonCallback() {
             @Override
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
+                mFeaturedAdapter.clear();
                 mFeaturedList = Show.getShows(json);
                 for (Show show : mFeaturedList)
                     mFeaturedAdapter.add(show);
@@ -63,6 +71,7 @@ public class ShowsFragment extends BaseTabFragment {
             @Override
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
+                mTrendingAdapter.clear();
                 mTrendingList = Episode.getEpisodes(json);
                 for (Episode episode : mTrendingList)
                     mTrendingAdapter.add(episode);
@@ -74,14 +83,13 @@ public class ShowsFragment extends BaseTabFragment {
             @Override
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
+                mRecommendedAdapter.clear();
                 mRecommendedList = Show.getShows(json);
                 for (Show show : mRecommendedList)
                     mRecommendedAdapter.add(show);
                 mRecommendedAdapter.notifyDataSetChanged();
             }
         }).execute(Utils.getRecommendedShows());
-
-        Utils.Exit(TAG, func);
     }
 
     @Override

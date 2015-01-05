@@ -42,11 +42,17 @@ public class ShopFragment extends Fragment {
         mAdapter = new ProductAdapter(getActivity(), R.id.product, mProductList);
 
         Utils.Debug(TAG, func, "UUID: " + mUuid);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         new HttpRequestTask(new JsonCallback() {
             @Override
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
+                mAdapter.clear();
                 mProductList = Product.getProducts(json);
 
                 for (Product product : mProductList)

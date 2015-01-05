@@ -58,10 +58,10 @@ public class Utils {
     }
 
     public static String getThumbnail(String path) {
-        String url = POCKETWATCH_API_THUMBNAIL;
-        url = String.format(url, path);
+        //String url = POCKETWATCH_API_THUMBNAIL;
+        //url = String.format(url, path);
 
-        return url;
+        return path;
     }
 
     public static String getChannels() {

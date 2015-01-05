@@ -4,4 +4,6 @@
     <color name="material_blue">#2095f2</color>
     <color name="black">#00000000</color>
     <color name="divider_grey">#ededed</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
 </resources>

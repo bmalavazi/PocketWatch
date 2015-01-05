@@ -79,9 +79,9 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Utils.Debug(TAG, func, "Description: " + product.getDescription());
         viewHolder.description.setText(product.getDescription());
         Utils.Debug(TAG, func, "Store Name: " + product.getStoreName());
-        viewHolder.store.setText(product.getStoreName());
+        viewHolder.store.setText("By " + product.getStoreName());
         Utils.Debug(TAG, func, "Price: " + product.getPrice());
-        viewHolder.price.setText(product.getPrice());
+        viewHolder.price.setText("$" + product.getPrice());
 
         for (Product.ProductThumbnail thumbnail : product.getThumbnailList())
             imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));

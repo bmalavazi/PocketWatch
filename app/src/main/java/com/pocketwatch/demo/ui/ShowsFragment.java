@@ -2,18 +2,23 @@ package com.pocketwatch.demo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.adapters.BannerPagerAdapter;
 import com.pocketwatch.demo.adapters.ShowAdapter;
 import com.pocketwatch.demo.adapters.TrendingEpisodeAdapter;
 import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.utils.HttpRequestTask;
+import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 
 import org.json.JSONObject;
@@ -30,12 +35,15 @@ public class ShowsFragment extends BaseTabFragment {
     private HorizontalListView mFeaturedView;
     private HorizontalListView mTrendingView;
     private HorizontalListView mRecommendedView;
+    private ViewPager mCarousel;
     private List<Show> mFeaturedList = new ArrayList<Show>();
     private List<Episode> mTrendingList = new ArrayList<Episode>();
     private List<Show> mRecommendedList = new ArrayList<Show>();
+    private ArrayList<ImageView> mPagerList = new ArrayList<ImageView>();
     private ShowAdapter mFeaturedAdapter;
     private TrendingEpisodeAdapter mTrendingAdapter;
     private ShowAdapter mRecommendedAdapter;
+    private BannerPagerAdapter<ImageView> mPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class ShowsFragment extends BaseTabFragment {
         mFeaturedAdapter = new ShowAdapter(getActivity(), R.id.show, mFeaturedList);
         mTrendingAdapter = new TrendingEpisodeAdapter(getActivity(), R.id.trending, mTrendingList);
         mRecommendedAdapter = new ShowAdapter(getActivity(), R.id.show, mRecommendedList);
+
 
         Utils.Exit(TAG, func);
     }
@@ -61,9 +70,25 @@ public class ShowsFragment extends BaseTabFragment {
                 Log.d(TAG, "setJsonObject()");
                 mFeaturedAdapter.clear();
                 mFeaturedList = Show.getShows(json);
-                for (Show show : mFeaturedList)
+                for (Show show : mFeaturedList) {
                     mFeaturedAdapter.add(show);
+                    ArrayList<String> imgUrls = new ArrayList<String>();
+                    List<Show.ShowThumbnail> thumbnails = show.getThumbnailList();
+                    for (Show.ShowThumbnail thumbnail : show.getThumbnailList())
+                        imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
+                    ImageView imageView = new ImageView(getActivity());
+                    imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    ImageLoader.loadImage(imageView,
+                            imgUrls,
+                            ImageLoader.getCache(),
+                            R.drawable.thumb_placeholder);
+                    mPagerList.add(imageView);
+                }
                 mFeaturedAdapter.notifyDataSetChanged();
+                mPagerAdapter = new BannerPagerAdapter<ImageView>(getActivity(), mPagerList);
+                mCarousel.setAdapter(mPagerAdapter);
+                mPagerAdapter.notifyDataSetChanged();
             }
         }).execute(Utils.getFeaturedShows());
 
@@ -95,6 +120,8 @@ public class ShowsFragment extends BaseTabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = super.onCreateView(inflater, container, savedInstanceState);
+
+        mCarousel = (ViewPager) mView.findViewById(R.id.carousel);
 
         mFeaturedView = (HorizontalListView) mView.findViewById(R.id.featured_shows);
         mFeaturedView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -146,6 +173,7 @@ public class ShowsFragment extends BaseTabFragment {
                 startActivity(intent);
             }
         });
+
 
         mFeaturedView.setAdapter(mFeaturedAdapter);
         mTrendingView.setAdapter(mTrendingAdapter);

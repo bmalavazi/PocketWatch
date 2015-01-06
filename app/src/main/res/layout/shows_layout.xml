@@ -37,7 +37,7 @@
             <com.pocketwatch.demo.ui.HorizontalListView
                 android:id="@+id/featured_shows"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
@@ -63,7 +63,7 @@
             <com.pocketwatch.demo.ui.HorizontalListView
                 android:id="@+id/trending_episodes"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
@@ -89,7 +89,7 @@
             <com.pocketwatch.demo.ui.HorizontalListView
                 android:id="@+id/recommended_episodes"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"/>
+                android:layout_height="200dp"/>
         </LinearLayout>
 
     </LinearLayout>

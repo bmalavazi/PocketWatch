@@ -73,8 +73,8 @@ public class ShowsFragment extends BaseTabFragment {
                 for (Show show : mFeaturedList) {
                     mFeaturedAdapter.add(show);
                     ArrayList<String> imgUrls = new ArrayList<String>();
-                    List<Show.ShowThumbnail> thumbnails = show.getThumbnailList();
-                    for (Show.ShowThumbnail thumbnail : show.getThumbnailList())
+                    List<Show.ShowThumbnail> thumbnails = show.getBannerList();
+                    for (Show.ShowThumbnail thumbnail : thumbnails)
                         imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
                     ImageView imageView = new ImageView(getActivity());
                     imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));

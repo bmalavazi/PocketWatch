@@ -186,7 +186,7 @@ public class ShowActivity extends Activity {
 
                     title.setText(episode.getTitle());
                     Calendar calendar = new Calendar(episode.getCreationTime());
-                    dateDuration.setText(calendar.getDateString() + " * " + Utils.getFormatDuration(episode.getDuration()));
+                    dateDuration.setText(calendar.getDateString() + " • " + Utils.getFormatDuration(episode.getDuration()));
                     //Log.d(TAG, "Raw Duration: " + episode.getDuration());
                     //Log.d(TAG, "Duration: " + Utils.getFormatDuration(episode.getDuration()));
                     description.setText(episode.getDescription());

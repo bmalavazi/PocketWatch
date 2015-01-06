@@ -13,16 +13,16 @@
         <ImageView
             android:id="@+id/show_banner"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:id="@+id/show_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Header1"
+            style="@style/Title"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"/>
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_title_name"
-            style="@style/Header2"
+            style="@style/Header1"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"/>
 
@@ -40,7 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="16dp"
+            style="@style/Header2"/>
 
         <TextView
             android:id="@+id/all_episodes_text"
@@ -49,7 +51,7 @@
             android:text="@string/all_episodes"
             style="@style/SectionHeader"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="10dp"/>
 
         <View
             android:layout_width="fill_parent"

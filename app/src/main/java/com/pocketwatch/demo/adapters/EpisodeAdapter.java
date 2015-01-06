@@ -81,7 +81,8 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
 
         viewHolder.title.setText(episode.getTitle());
         Calendar calendar = new Calendar(episode.getCreationTime());
-        viewHolder.dateDuration.setText(calendar.getDateString() + " * " + Utils.getFormatDuration(episode.getDuration()));
+        //viewHolder.dateDuration.setText(calendar.getDateString() + " • " + Utils.getFormatDuration(episode.getDuration()));
+        viewHolder.dateDuration.setText(calendar.getDateString() + " • " + Utils.getFormatDuration(episode.getDuration()));
         //Log.d(TAG, "Raw Duration: " + episode.getDuration());
         //Log.d(TAG, "Duration: " + Utils.getFormatDuration(episode.getDuration()));
         viewHolder.description.setText(episode.getDescription());

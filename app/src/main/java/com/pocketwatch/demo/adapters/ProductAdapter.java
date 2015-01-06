@@ -1,6 +1,8 @@
 package com.pocketwatch.demo.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
     private class ViewHolder {
         public ImageView image;
-        public TextView description;
+        public TextView title;
         public TextView store;
         public TextView price;
     }
@@ -67,7 +69,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
             viewHolder = new ViewHolder();
             viewHolder.image = (ImageView) convertView.findViewById(R.id.product_image);
-            viewHolder.description = (TextView) convertView.findViewById(R.id.product_description);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.product_name);
             viewHolder.store = (TextView) convertView.findViewById(R.id.product_store_name);
             viewHolder.price = (TextView) convertView.findViewById(R.id.product_price);
 
@@ -76,12 +78,15 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Utils.Debug(TAG, func, "Description: " + product.getDescription());
-        viewHolder.description.setText(product.getDescription());
+        //Utils.Debug(TAG, func, "Description: " + product.getDescription());
+        //viewHolder.description.setText(product.getDescription());
         Utils.Debug(TAG, func, "Store Name: " + product.getStoreName());
+        viewHolder.title.setText(product.getName());
         viewHolder.store.setText("By " + product.getStoreName());
+        viewHolder.store.setOnClickListener(new AddPurchaseLink(product));
+
         Utils.Debug(TAG, func, "Price: " + product.getPrice());
-        viewHolder.price.setText("$" + product.getPrice());
+        viewHolder.price.setText(product.getPrice());
 
         for (Product.ProductThumbnail thumbnail : product.getThumbnailList())
             imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
@@ -104,5 +109,19 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     @Override
     public boolean isEmpty() {
         return mProducts.isEmpty();
+    }
+
+    private class AddPurchaseLink implements View.OnClickListener {
+        private Product mProduct;
+
+        public AddPurchaseLink(Product product) {
+            mProduct = product;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(mProduct.getPurchaseUrl()));
+            mContext.startActivity(in);
+        }
     }
 }

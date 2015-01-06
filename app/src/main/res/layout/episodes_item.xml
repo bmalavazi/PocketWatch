@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/episode_image"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="128dp"
+        android:layout_height="79dp"
         android:scaleType="centerCrop"
         android:src="@drawable/thumb_placeholder"
         android:layout_centerVertical="true"/>
@@ -25,10 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textStyle="bold"
             android:ellipsize="end"
-            android:textSize="16sp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            style="@style/Header1"/>
 
         <TextView
             android:id="@+id/episode_date_duration"
@@ -37,8 +36,8 @@
             android:layout_below="@id/episode_title"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:textSize="16sp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            style="@style/Header3"/>
 
         <TextView
             android:id="@+id/episode_description"
@@ -47,8 +46,8 @@
             android:layout_below="@id/episode_date_duration"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:textSize="16sp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            style="@style/Header2"/>
 
     </RelativeLayout>
 

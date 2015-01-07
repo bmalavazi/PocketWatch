@@ -26,8 +26,8 @@ public class Utils {
     */
 
     //private static final String POCKETWATCH_API_URL = "http://104.200.20.15:3000";
-    private static final String POCKETWATCH_API_URL = "http://54.173.83.140/";
-    //private static final String POCKETWATCH_API_URL = "http://getpocket.watch";
+    //private static final String POCKETWATCH_API_URL = "http://54.173.83.140";
+    private static final String POCKETWATCH_API_URL = "http://getpocket.watch";
     private static final String POCKETWATCH_API_BASE = POCKETWATCH_API_URL + "/api/v1/";
     private static final String POCKETWATCH_API_CHANNELS = POCKETWATCH_API_BASE + "channels";
     private static final String POCKETWATCH_API_CHANNEL = POCKETWATCH_API_BASE + "channels/%s";

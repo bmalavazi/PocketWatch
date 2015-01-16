@@ -17,4 +17,6 @@ public class Constants {
 
     public static final int DURATION_HOUR = 3600;
     public static final int DURATION_MINUTE = 60;
+
+    public static final int BANNER_SCROLL_FREQUENCY = 3000;
 }

@@ -2,6 +2,7 @@ package com.pocketwatch.demo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.Constants;
 import com.pocketwatch.demo.adapters.BannerPagerAdapter;
 import com.pocketwatch.demo.adapters.ShowAdapter;
 import com.pocketwatch.demo.adapters.TrendingEpisodeAdapter;
@@ -25,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by bmalavazi on 12/22/14.
@@ -44,6 +48,9 @@ public class ShowsFragment extends BaseTabFragment {
     private TrendingEpisodeAdapter mTrendingAdapter;
     private ShowAdapter mRecommendedAdapter;
     private BannerPagerAdapter<ImageView> mPagerAdapter;
+    private Timer mPagerTimer;
+    private BannerTimer mBannerTimer;
+    private Handler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,14 +62,25 @@ public class ShowsFragment extends BaseTabFragment {
         mFeaturedAdapter = new ShowAdapter(getActivity(), R.id.show, mFeaturedList);
         mTrendingAdapter = new TrendingEpisodeAdapter(getActivity(), R.id.trending, mTrendingList);
         mRecommendedAdapter = new ShowAdapter(getActivity(), R.id.show, mRecommendedList);
-
+        mHandler = new Handler(getActivity().getMainLooper());
 
         Utils.Exit(TAG, func);
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        mBannerTimer.cancel();
+        mPagerTimer.cancel();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+
+        mPagerTimer = new Timer();
+        mBannerTimer = new BannerTimer();
 
         new HttpRequestTask(new JsonCallback() {
             @Override
@@ -85,10 +103,16 @@ public class ShowsFragment extends BaseTabFragment {
                             R.drawable.thumb_placeholder);
                     mPagerList.add(imageView);
                 }
+
                 mFeaturedAdapter.notifyDataSetChanged();
                 mPagerAdapter = new BannerPagerAdapter<ImageView>(getActivity(), mPagerList);
                 mCarousel.setAdapter(mPagerAdapter);
                 mPagerAdapter.notifyDataSetChanged();
+
+                mPagerTimer.schedule(mBannerTimer,
+                                     Constants.BANNER_SCROLL_FREQUENCY,
+                                     Constants.BANNER_SCROLL_FREQUENCY);
+
             }
         }).execute(Utils.getFeaturedShows());
 
@@ -184,6 +208,26 @@ public class ShowsFragment extends BaseTabFragment {
         mRecommendedAdapter.notifyDataSetChanged();
 
         return mView;
+    }
+
+    class BannerTimer extends TimerTask {
+        int mPage;
+
+        BannerTimer() { mPage = 0; }
+
+        @Override
+        public void run() {
+            getActivity().runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    int maxCount = mPagerAdapter.getCount();
+
+                    if (maxCount > 0)
+                        mCarousel.setCurrentItem((mPage++ % maxCount), true);
+                }
+            });
+        }
     }
 
     @Override

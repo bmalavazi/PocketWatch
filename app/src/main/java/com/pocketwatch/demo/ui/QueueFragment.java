@@ -8,7 +8,7 @@ public class QueueFragment extends BaseTabFragment {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.queue_layout;
     }
 
     public static String getTAG() {

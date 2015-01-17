@@ -1,11 +1,12 @@
 package com.pocketwatch.demo.ui;
 
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import android.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,27 +19,9 @@ import java.util.List;
 
 public abstract class BaseTabActivity extends Activity {
     private static final String TAG = "BaseTabActivity";
-    protected FragmentTabHost mTabHost;
     protected ActionBar mActionBar;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
-    ActionBar.TabListener mActionBarTabListener = new ActionBar.TabListener() {
-
-        @Override
-        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        }
-
-        @Override
-        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        }
-
-        @Override
-        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +37,19 @@ public abstract class BaseTabActivity extends Activity {
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         mFragmentManager = getFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        ShowsFragment showsFragment = new ShowsFragment();
-        mFragmentTransaction.replace(R.id.tabContent, showsFragment);
-        mFragmentTransaction.commit();
+        //mFragmentTransaction = mFragmentManager.beginTransaction();
+        //ShowsFragment showsFragment = new ShowsFragment();
+        //QueueFragment queueFragment = new QueueFragment();
+        //mFragmentTransaction.replace(R.id.tabContent, showsFragment);
+        //mFragmentTransaction.commit();
 
-        List<String> tabs = getTabTags();
-        for (String tab : tabs)
-            mActionBar.addTab(mActionBar.newTab().setText(tab).setTabListener(mActionBarTabListener));
+        List<TabSpec> tabs = getTabSpecs();
+        for (TabSpec tab : tabs)
+            mActionBar.addTab(mActionBar.newTab().setText(tab.getTabTag()).setTabListener(new TabListener(this, tab.getTabTag(), tab.getTabClass())));
+
+        //List<String> tabs = getTabTags();
+        //for (String tab : tabs)
+            //mActionBar.addTab(mActionBar.newTab().setText(tab).setTabListener(mActionBarTabListener));
 
         BitmapSizeCache cache = ImageLoader.getCache();
         if(cache == null){
@@ -69,33 +57,6 @@ public abstract class BaseTabActivity extends Activity {
         }
 
         Utils.Exit(TAG, func);
-    }
-
-    protected void addTabs(List<TabSpec> tabs) {
-        final String func = "addTabs()";
-        Utils.Entry(TAG, func);
-
-        for (TabSpec tab : tabs)
-            mTabHost.addTab(mTabHost.newTabSpec(tab.getTabTag()).setIndicator(tab.getTabIndicator()),
-                            tab.getTabClass(), null);
-
-        Utils.Exit(TAG, func);
-    }
-
-    protected class TabSpec {
-        private String tabSpecTag;
-        private int tabSpecResId;
-        private Class<?> tabSpecClass;
-
-        public TabSpec(String tabTag, int tabResId, Class<?> tabClass) {
-            this.tabSpecTag = tabTag;
-            this.tabSpecResId = tabResId;
-            this.tabSpecClass = tabClass;
-        }
-
-        public String getTabTag() { return tabSpecTag; }
-        public CharSequence getTabIndicator() { return getResources().getText(tabSpecResId); }
-        public Class<?> getTabClass() { return tabSpecClass; }
     }
 
     protected abstract List<TabSpec> getTabSpecs();
@@ -119,4 +80,65 @@ public abstract class BaseTabActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private class TabListener<T extends Fragment> implements ActionBar.TabListener {
+        private final Activity mActivity;
+        private final String mTag;
+        private final Class<T> mClass;
+        private final Bundle mArgs;
+        private Fragment mFragment;
+
+        public TabListener(Activity activity, String tag, Class<T> clz) {
+            this(activity, tag, clz, null);
+        }
+
+        public TabListener(Activity activity, String tag, Class<T> clz,
+                           Bundle args) {
+            mActivity = activity;
+            mTag = tag;
+            mClass = clz;
+            mArgs = args;
+
+            mFragment = mActivity.getFragmentManager().findFragmentByTag(mTag);
+            if (mFragment != null && !mFragment.isDetached()) {
+                FragmentTransaction ft = mActivity.getFragmentManager()
+                        .beginTransaction();
+                ft.detach(mFragment);
+                ft.commit();
+            }
+        }
+
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            final String func = "onTabSelected()";
+
+            Utils.Entry(TAG, func);
+
+            if (mFragment == null) {
+                mFragment = Fragment.instantiate(mActivity, mClass.getName(),
+                        mArgs);
+                ft.add(R.id.tabContent, mFragment, mTag);
+            } else {
+                ft.attach(mFragment);
+            }
+
+            Utils.Exit(TAG, func);
+        }
+
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+            final String func = "onTabUnselected()";
+
+            Utils.Entry(TAG, func);
+
+            if (mFragment != null) {
+                ft.detach(mFragment);
+            }
+
+            Utils.Exit(TAG, func);
+        }
+
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+            //new CustomToast(mActivity, "Reselected!");
+        }
+    }
+
 }

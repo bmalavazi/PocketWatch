@@ -42,20 +42,21 @@ public class HomeActivity extends BaseTabActivity {
     protected List<TabSpec> getTabSpecs() {
         ArrayList<TabSpec> tabs = new ArrayList<TabSpec>();
 
-        tabs.add(new TabSpec(ShowsFragment.getTAG(),
+        tabs.add(new TabSpec(getResources().getString(R.string.tab_shows),
                              R.string.tab_shows,
                              ShowsFragment.class));
-/*
-        tabs.add(new TabSpec(QueueFragment.getTAG(),
+
+        tabs.add(new TabSpec(getResources().getString(R.string.tab_queue),
                              R.string.tab_queue,
                              QueueFragment.class));
-*/
+
         return tabs;
     }
 
     @Override
     protected List<String> getTabTags() {
         ArrayList<String> tabs = new ArrayList<String>();
+        tabs.add("Subscriptions");
         tabs.add("Shows");
 
         return tabs;

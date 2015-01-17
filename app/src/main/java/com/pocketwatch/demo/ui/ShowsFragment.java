@@ -94,9 +94,10 @@ public class ShowsFragment extends BaseTabFragment {
                     List<Show.ShowThumbnail> thumbnails = show.getBannerList();
                     for (Show.ShowThumbnail thumbnail : thumbnails)
                         imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
-                    ImageView imageView = new ImageView(getActivity());
+                    AspectRatioImageView imageView = new AspectRatioImageView(getActivity());
                     imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    //imageView.setAdjustViewBounds(true);
                     ImageLoader.loadImage(imageView,
                             imgUrls,
                             ImageLoader.getCache(),

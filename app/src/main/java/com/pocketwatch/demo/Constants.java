@@ -20,5 +20,5 @@ public class Constants {
 
     public static final int BANNER_SCROLL_FREQUENCY = 3000;
 
-    public static final float BANNER_ASPECT_RATIO = 375/190;
+    public static final double BANNER_ASPECT_RATIO = 256.0/414.0;
 }

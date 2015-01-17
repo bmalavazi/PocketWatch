@@ -2,7 +2,6 @@ package com.pocketwatch.demo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,7 +49,6 @@ public class ShowsFragment extends BaseTabFragment {
     private BannerPagerAdapter<ImageView> mPagerAdapter;
     private Timer mPagerTimer;
     private BannerTimer mBannerTimer;
-    private Handler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +60,6 @@ public class ShowsFragment extends BaseTabFragment {
         mFeaturedAdapter = new ShowAdapter(getActivity(), R.id.show, mFeaturedList);
         mTrendingAdapter = new TrendingEpisodeAdapter(getActivity(), R.id.trending, mTrendingList);
         mRecommendedAdapter = new ShowAdapter(getActivity(), R.id.show, mRecommendedList);
-        mHandler = new Handler(getActivity().getMainLooper());
 
         Utils.Exit(TAG, func);
     }

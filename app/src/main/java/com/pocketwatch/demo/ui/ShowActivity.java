@@ -202,6 +202,13 @@ public class ShowActivity extends Activity {
                     mLinearLayout.addView(view);
                     mLinearLayout.addView(divider);
                 }
+
+                View copyright = inflater.inflate(R.layout.copyright, null, false);
+                TextView copyrightText = (TextView) copyright.findViewById(R.id.copyright);
+                copyrightText.setText(mShow.getCopyright());
+
+                mLinearLayout.addView(copyright);
+
 /*
                 ((ViewGroup)mFrameLayout).addView(layout);
 

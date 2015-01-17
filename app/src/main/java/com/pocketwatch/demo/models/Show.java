@@ -25,6 +25,8 @@ public class Show extends BaseModel {
     private static final String POCKETWATCH_SHOW_TITLE = "title";
     private static final String POCKETWATCH_SHOW_DESCRIPTION = "description";
     private static final String POCKETWATCH_SHOW_TILE_IMAGE_URL = "tile_image_url";
+    private static final String POCKETWATCH_SHOW_CREATOR = "creator";
+    private static final String POCKETWATCH_SHOW_COPYRIGHT = "copyright";
     private static final String POCKETWATCH_SHOW_BANNER_URL = "banner_url";
     private static final String POCKETWATCH_SHOW_THUMBNAILS = "thumbnails";
     private static final String POCKETWATCH_SHOW_BANNERS = "banners";
@@ -45,6 +47,8 @@ public class Show extends BaseModel {
     private String mTitle;
     private String mDescription;
     private String mTileImageUrl;
+    private String mCreator;
+    private String mCopyright;
     private String mBannerUrl;
     private JSONArray mThumbnails;
     private JSONArray mBanners;
@@ -109,6 +113,8 @@ public class Show extends BaseModel {
             show.mTitle = Utils.getJsonString(json, POCKETWATCH_SHOW_TITLE);
             show.mDescription = Utils.getJsonString(json, POCKETWATCH_SHOW_DESCRIPTION);
             show.mTileImageUrl = Utils.getJsonString(json, POCKETWATCH_SHOW_TILE_IMAGE_URL);
+            show.mCreator = Utils.getJsonString(json, POCKETWATCH_SHOW_CREATOR);
+            show.mCopyright = Utils.getJsonString(json, POCKETWATCH_SHOW_COPYRIGHT);
             show.mBannerUrl = Utils.getJsonString(json, POCKETWATCH_SHOW_BANNER_URL);
             show.mThumbnails = Utils.getJsonArray(json, POCKETWATCH_SHOW_THUMBNAILS);
             show.mThumbnailList = getThumbnails(show.mThumbnails);
@@ -199,6 +205,10 @@ public class Show extends BaseModel {
     public List<ShowThumbnail> getThumbnailList() { return mThumbnailList; }
 
     public List<ShowThumbnail> getBannerList() { return mBannerList; }
+
+    public String getCreator() { return mCreator; }
+
+    public String getCopyright() { return mCopyright; }
 
     @Override
     public ModelParser getModelParser() {

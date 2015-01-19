@@ -5,7 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="tab_shows">Shows</string>
-    <string name="tab_queue">Queue</string>
+    <string name="tab_queue">Subscriptions</string>
     <string name="tab_social">Social</string>
     <string name="tab_chat">Chat</string>
     <string name="tab_shop">Shop</string>

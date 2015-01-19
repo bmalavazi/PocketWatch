@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.adapters.SubscriptionAdapter;
-import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.models.Subscription;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.Utils;
@@ -26,7 +25,6 @@ public class QueueFragment extends BaseTabFragment {
     private static final String TAG = "QueueFragment";
     private View mView;
     private ListView mSubscriptionView;
-    private List<Show> mShowList = new ArrayList<Show>();
     private List<Subscription> mSubscriptionList = new ArrayList<Subscription>();
     private SubscriptionAdapter mSubscriptionAdapter;
 
@@ -37,7 +35,7 @@ public class QueueFragment extends BaseTabFragment {
 
         Utils.Entry(TAG, func);
 
-        mSubscriptionAdapter = new SubscriptionAdapter(getActivity(), R.id.subscription_list, mShowList);
+        mSubscriptionAdapter = new SubscriptionAdapter(getActivity(), R.id.subscription_list, mSubscriptionList);
 
 
         Utils.Exit(TAG, func);
@@ -54,9 +52,7 @@ public class QueueFragment extends BaseTabFragment {
                 mSubscriptionAdapter.clear();
                 mSubscriptionList = Subscription.getSubscriptions(json);
                 for (Subscription subscription : mSubscriptionList) {
-                    Show show = subscription.getShow();
-                    mShowList.add(show);
-                    mSubscriptionAdapter.add(show);
+                    mSubscriptionAdapter.add(subscription);
                 }
                 mSubscriptionAdapter.notifyDataSetChanged();
             }

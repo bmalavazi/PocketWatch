@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pocketwatch.demo.models.Show;
+import com.pocketwatch.demo.models.Subscription;
 import com.pocketwatch.demo.ui.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
@@ -19,14 +20,14 @@ import java.util.List;
 /**
  * Created by bmalavazi on 1/18/15.
  */
-public class SubscriptionAdapter extends ArrayAdapter<Show> {
+public class SubscriptionAdapter extends ArrayAdapter<Subscription> {
     private static final String TAG = "SubscriptionAdapter";
-    private List<Show> mShows;
+    private List<Subscription> mSubscriptions;
     private Context mContext;
 
-    public SubscriptionAdapter(Context context, int viewId, List<Show> shows) {
+    public SubscriptionAdapter(Context context, int viewId, List<Subscription> shows) {
         super(context, viewId, shows);
-        this.mShows = shows;
+        this.mSubscriptions = shows;
         this.mContext = context;
     }
 
@@ -38,12 +39,12 @@ public class SubscriptionAdapter extends ArrayAdapter<Show> {
 
     @Override
     public int getCount() {
-        return mShows.size();
+        return mSubscriptions.size();
     }
 
     @Override
-    public Show getItem(int position) {
-        return mShows.get(position);
+    public Subscription getItem(int position) {
+        return mSubscriptions.get(position);
     }
 
     @Override
@@ -59,7 +60,8 @@ public class SubscriptionAdapter extends ArrayAdapter<Show> {
 
         Utils.Entry(TAG, func, "Position: " + position);
 
-        Show show = mShows.get(position);
+        Subscription subscription = mSubscriptions.get(position);
+        Show show = subscription.getShow();
 
         if (null == convertView) {
             LayoutInflater inflater = (LayoutInflater)
@@ -69,7 +71,7 @@ public class SubscriptionAdapter extends ArrayAdapter<Show> {
             viewHolder = new ViewHolder();
             viewHolder.image = (ImageView) convertView.findViewById(R.id.queue_image);
             viewHolder.title = (TextView) convertView.findViewById(R.id.queue_title);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.queue_date_duration);
+            viewHolder.duration = (TextView) convertView.findViewById(R.id.queue_date_duration);
 
             convertView.setTag(viewHolder);
         } else {
@@ -77,6 +79,10 @@ public class SubscriptionAdapter extends ArrayAdapter<Show> {
         }
 
         viewHolder.title.setText(show.getTitle());
+
+        //viewHolder.dateDuration.setText(calendar.getDateString() + " • " + Utils.getFormatDuration(episode.getDuration()));
+        viewHolder.duration.setText(Utils.getFormattedUnwatched(subscription.getUnviewedEpisodeCount()) + " • " + Utils.getFormatDuration(subscription.getUnviewedEpisodeDuration()));
+
         //imgUrls.add(show.getTileImageUrl());
         for (Show.ShowThumbnail thumbnail : show.getThumbnailList())
             imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
@@ -94,6 +100,6 @@ public class SubscriptionAdapter extends ArrayAdapter<Show> {
 
     @Override
     public boolean isEmpty() {
-        return mShows.isEmpty();
+        return mSubscriptions.isEmpty();
     }
 }

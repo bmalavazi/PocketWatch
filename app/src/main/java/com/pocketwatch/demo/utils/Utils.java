@@ -210,6 +210,24 @@ public class Utils {
         return fmtDuration;
     }
 
+    public static String getFormattedUnwatched(int unwatched) {
+        StringBuilder sb = new StringBuilder();
+
+        switch (unwatched) {
+            case 0:
+                sb.append("You're all caught up.");
+                break;
+            case 1:
+                sb.append("1 Unwatched Episode");
+                break;
+            default:
+                sb.append(unwatched + " Unwatched Episodes");
+                break;
+        }
+
+        return sb.toString();
+    }
+
     public static boolean getJsonBoolean(JSONObject json, String name) throws JSONException{
         if(!json.isNull(name)){
             return json.getBoolean(name);

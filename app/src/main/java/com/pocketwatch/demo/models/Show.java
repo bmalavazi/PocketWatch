@@ -20,6 +20,7 @@ public class Show extends BaseModel {
 
     private static final String POCKETWATCH_SHOW_KEY_ARRAY = "shows";
     private static final String POCKETWATCH_SHOW_KEY_SINGLE = "show";
+    private static final String POCKETWATCH_SHOW_SUBSCRIPTIONS = "subscriptions";
     private static final String POCKETWATCH_SHOW_ID = "id";
     private static final String POCKETWATCH_SHOW_UUID = "uuid";
     private static final String POCKETWATCH_SHOW_TITLE = "title";

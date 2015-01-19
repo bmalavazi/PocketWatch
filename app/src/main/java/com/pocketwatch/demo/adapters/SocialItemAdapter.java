@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pocketwatch.demo.models.SocialItem;
+import com.pocketwatch.demo.ui.CircleImageView;
 import com.pocketwatch.demo.ui.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
@@ -31,7 +32,7 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
     }
 
     private class ViewHolder {
-        public ImageView avatar;
+        public CircleImageView avatar;
         public TextView creator;
         public TextView content;
         public ImageView image;
@@ -66,7 +67,7 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
             convertView = inflater.inflate(R.layout.social_item, viewGroup, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.avatar = (ImageView) convertView.findViewById(R.id.social_avatar);
+            viewHolder.avatar = (CircleImageView) convertView.findViewById(R.id.social_avatar);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.social_image);
             viewHolder.creator = (TextView) convertView.findViewById(R.id.social_creator);
             viewHolder.content = (TextView) convertView.findViewById(R.id.social_content);

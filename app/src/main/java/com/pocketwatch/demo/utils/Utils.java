@@ -42,6 +42,14 @@ public class Utils {
     private static final String POCKETWATCH_API_PRODUCTS = POCKETWATCH_API_BASE + "episodes/%s/products";
     private static final String POCKETWATCH_API_SOCIAL_ITEMS = POCKETWATCH_API_BASE + "episodes/%s/social_items";
     private static final String POCKETWATCH_API_THUMBNAIL = POCKETWATCH_API_URL + "/%s";
+    private static final String POCKETWATCH_API_USERS = "users/";
+    private static final String POCKETWATCH_API_SUBSCRIPTIONS = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "subscriptions";
+    private static final String POCKETWATCH_API_SUBSCRIBE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "subscribe";
+    private static final String POCKETWATCH_API_UNSUBSCRIBE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "unsubscribe";
+    private static final String POCKETWATCH_API_API_KEY = "api_key=" + Constants.POCKETWATCH_API_KEY;
+    private static final String POCKETWATCH_API_SHOW_ID = "show_id=";
+    private static final String POCKETWATCH_API_FIRST_ARG = "?";
+    private static final String POCKETWATCH_API_DELIMITER_ARG = "&";
 
     private static HashMap<String, String> EPISODE_TAB_MAPS = new HashMap<String, String>();
 
@@ -135,6 +143,10 @@ public class Utils {
         url = String.format(url, uuid);
 
         return url;
+    }
+
+    public static String getSubscriptions() {
+        return POCKETWATCH_API_SUBSCRIPTIONS + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY;
     }
 
     /*

@@ -13,7 +13,7 @@
         android:paddingRight="16dp"
         android:layout_marginBottom="20dp">
 
-        <ImageView
+        <com.pocketwatch.demo.ui.CircleImageView
             android:id="@+id/social_avatar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

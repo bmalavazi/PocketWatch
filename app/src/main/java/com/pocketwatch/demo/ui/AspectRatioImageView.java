@@ -1,6 +1,7 @@
 package com.pocketwatch.demo.ui;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.pocketwatch.demo.Constants;
@@ -14,6 +15,10 @@ public class AspectRatioImageView extends ImageView {
 
     public AspectRatioImageView(Context context) {
         super(context, null);
+    }
+
+    public AspectRatioImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override

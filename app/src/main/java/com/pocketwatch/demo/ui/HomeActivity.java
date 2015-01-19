@@ -2,6 +2,7 @@ package com.pocketwatch.demo.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -49,7 +50,7 @@ public class HomeActivity extends BaseTabActivity {
         }).execute(Utils.getChannels());
 */
         //if (checkPlayServices())
-        if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext())) {
+        if (checkPlayServices()) {
             Utils.Debug(TAG, func, "Google Play Services available");
             registerInBackground();
         } else {
@@ -108,5 +109,20 @@ public class HomeActivity extends BaseTabActivity {
                 return null;
             }
         }).execute(null, null, null);
+    }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }

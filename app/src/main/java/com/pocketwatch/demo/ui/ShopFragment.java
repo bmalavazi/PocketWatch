@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.pocketwatch.demo.Callbacks.EpisodeCallback;
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.adapters.ProductAdapter;
 import com.pocketwatch.demo.models.Product;
 import com.pocketwatch.demo.utils.HttpRequestTask;

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.adapters.SubscriptionAdapter;
 import com.pocketwatch.demo.models.Subscription;
 import com.pocketwatch.demo.utils.HttpRequestTask;

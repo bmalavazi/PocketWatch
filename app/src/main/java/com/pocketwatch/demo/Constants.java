@@ -23,6 +23,7 @@ public class Constants {
     public static final double BANNER_ASPECT_RATIO = 256.0/414.0;
 
     public static final String POCKETWATCH_API_KEY = "07f22ae5c3a420fabe87c9e51ffd2306b284db8c2a4c05a7762b965390cccde86617978c41f3bcf8";
+    public static final String GCM_SENDER_ID = "751802367359";
 
     public static final String APP_SHARED_PREFERENCES = "APP_SHARED_PREFERENCES";
     public static final String GCM_REGISTRATION_ID = "GCM_REGISTRATION_ID";

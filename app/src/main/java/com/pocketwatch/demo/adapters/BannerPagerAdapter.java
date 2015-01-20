@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.pocketwatch.demo.ui.R;
+import com.pocketwatch.demo.R;
 
 import java.util.ArrayList;
 

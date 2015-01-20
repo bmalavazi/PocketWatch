@@ -3,13 +3,14 @@ package com.pocketwatch.demo.ui;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.ImageLoader.BitmapSizeCache;
 import com.pocketwatch.demo.utils.Utils;

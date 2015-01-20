@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.Constants;
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.adapters.BannerPagerAdapter;
 import com.pocketwatch.demo.adapters.ShowAdapter;
 import com.pocketwatch.demo.adapters.TrendingEpisodeAdapter;

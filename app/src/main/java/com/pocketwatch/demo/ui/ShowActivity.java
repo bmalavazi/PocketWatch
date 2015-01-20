@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.adapters.EpisodeAdapter;
 import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.models.Show;

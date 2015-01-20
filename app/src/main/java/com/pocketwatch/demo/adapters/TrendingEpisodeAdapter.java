@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pocketwatch.demo.models.Episode;
-import com.pocketwatch.demo.ui.R;
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 

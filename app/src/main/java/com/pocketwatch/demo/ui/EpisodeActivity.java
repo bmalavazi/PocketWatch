@@ -10,6 +10,7 @@ import android.widget.VideoView;
 import com.pocketwatch.demo.Callbacks.EpisodeCallback;
 import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.Constants;
+import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.Utils;

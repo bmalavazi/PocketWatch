@@ -3,6 +3,7 @@ package com.pocketwatch.demo.ui;
 /**
  * Created by bmalavazi on 12/23/14.
  */
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -27,6 +28,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Scroller;
+
+import com.pocketwatch.demo.R;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

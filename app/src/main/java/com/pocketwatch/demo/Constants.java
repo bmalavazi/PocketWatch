@@ -30,4 +30,5 @@ public class Constants {
     public static final String APP_SHARED_PREFERENCES = "APP_SHARED_PREFERENCES";
     public static final String GCM_REGISTRATION_ID = "GCM_REGISTRATION_ID";
     public static final String GCM_NOTIFICATION_ID = "GCM_NOTIFICATION_ID";
+    public static final String APP_SHOW_SUBSCRIPTIONS = "APP_SHOW_SUBSCRIPTIONS";
 }

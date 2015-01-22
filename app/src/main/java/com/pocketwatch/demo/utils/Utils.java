@@ -1,14 +1,17 @@
 package com.pocketwatch.demo.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.pocketwatch.demo.Constants;
+import com.pocketwatch.demo.Preferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by bmalavazi on 12/23/14.
@@ -193,31 +196,15 @@ public class Utils {
         return url;
     }
 
-    /*
-    public static String getShows() {
-        return POCKETWATCH_SHOWS;
+    public static boolean isSubscribed(Context context, String uuid) {
+        Set<String> uuids = Preferences.getSubscriptions(context);
+
+        if (null == uuids || !uuids.contains(uuid)) {
+            return false;
+        }
+
+        return true;
     }
-
-    public static String getShow(String uuid) {
-        return POCKETWATCH_SHOW + uuid;
-    }
-
-    public static String getEpisode(int episode) {
-        return POCKETWATCH_EPISODE + episode;
-    }
-
-    public static String getEpisode(String uuid) {
-        return POCKETWATCH_EPISODE + uuid;
-    }
-
-    public static String getSocialItems(String uuid) { return getEpisode(uuid) +  POCKETWATCH_SOCIAL; }
-
-    public static String getProducts(String uuid) { return getEpisode(uuid) +  POCKETWATCH_PRODUCTS; }
-
-    public static String getEpisodes(String uuid) {
-        return POCKETWATCH_EPISODES + uuid + "/episodes";
-    }
-    */
 
     public static boolean isEmpty(String text) {
         if (null == text ||

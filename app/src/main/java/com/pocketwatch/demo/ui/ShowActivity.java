@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pocketwatch.demo.Callbacks.JsonCallback;
+import com.pocketwatch.demo.Preferences;
 import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.adapters.EpisodeAdapter;
 import com.pocketwatch.demo.models.Episode;
@@ -284,7 +285,20 @@ public class ShowActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_subscribe, menu);
+        final String func = "onCreateOptionsMenu()";
+
+        Utils.Entry(TAG, func);
+
+        if (!Utils.isSubscribed(this, mUuid)) {
+            Utils.Debug(TAG, func, "Subscribe");
+            getMenuInflater().inflate(R.menu.main_subscribe, menu);
+        } else {
+            Utils.Debug(TAG, func, "Unsubscribe");
+            getMenuInflater().inflate(R.menu.main_unsubscribe, menu);
+        }
+
+        Utils.Exit(TAG, func);
+
         return true;
     }
 
@@ -299,8 +313,19 @@ public class ShowActivity extends Activity {
             case R.id.action_settings:
                 return true;
             case R.id.action_subscribe:
-                Utils.Debug(TAG, func, "Subscribing to show with UUID: " + mUuid);
-                new HttpPostTask().execute(Utils.subscribe(mUuid));
+            case R.id.action_unsubscribe:
+                if (!Utils.isSubscribed(this, mUuid)) {
+                    Utils.Debug(TAG, func, "Subscribing to show with UUID: " + mUuid);
+                    new HttpPostTask().execute(Utils.subscribe(mUuid));
+                    Preferences.setSubscriptions(this, mUuid);
+                    item.setTitle(getResources().getString(R.string.action_unsubscribe));
+                } else {
+                    Utils.Debug(TAG, func, "Unsubscribing to show with UUID: " + mUuid);
+                    new HttpPostTask().execute(Utils.unsubscribe(mUuid));
+                    Preferences.removeSubscriptions(this, mUuid);
+                    item.setTitle(getResources().getString(R.string.action_subscribe));
+                }
+
                 return true;
         }
 

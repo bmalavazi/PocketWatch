@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import com.pocketwatch.demo.utils.Utils;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Created by bmalavazi on 1/18/15.
  */
@@ -64,5 +67,56 @@ public class Preferences {
         Utils.Exit(TAG, func, "Registration ID: " + id);
 
         return id;
+    }
+
+    public static Set<String> getSubscriptions(Context context) {
+        final String func = "getSubscriptions()";
+
+        Utils.Entry(TAG, func);
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, null);
+
+        Utils.Exit(TAG, func);
+
+        return uuids;
+    }
+
+    public static void setSubscriptions(Context context, String uuid) {
+        final String func = "setSubscriptions()";
+
+        Utils.Entry(TAG, func, "UUID: " + uuid);
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, null);
+
+        if (null == uuids) {
+            uuids = new TreeSet<String>();
+        }
+
+        uuids.add(uuid);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, uuids);
+        editor.commit();
+
+        Utils.Exit(TAG, func);
+    }
+
+    public static void removeSubscriptions(Context context, String uuid) {
+        final String func = "setSubscriptions()";
+
+        Utils.Entry(TAG, func, "UUID: " + uuid);
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, null);
+
+        uuids.remove(uuid);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, uuids);
+        editor.commit();
+
+        Utils.Exit(TAG, func);
     }
 }

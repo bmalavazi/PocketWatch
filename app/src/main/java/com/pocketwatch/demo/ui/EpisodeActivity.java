@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.pocketwatch.demo.Callbacks.EpisodeCallback;
@@ -32,6 +33,7 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
     private Episode mEpisode;
     private FragmentTabHost mTabHost;
     private HashMap<String, TabSpec> mFragmentMap = new HashMap<String, TabSpec>();
+    private MediaController mController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,11 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
                 mEpisode = Episode.getSingleEpisode(json);
                 Uri uri = Uri.parse(mEpisode.getVideoUrl());
 
+                mController = new MediaController(EpisodeActivity.this);
                 mVideoView.setVideoURI(uri);
+                //mVideoView.start();
+                mVideoView.setMediaController(mController);
+                mController.show();
                 mVideoView.start();
             }
         }).execute(Utils.getEpisode(mUuid));

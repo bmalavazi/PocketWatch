@@ -45,6 +45,16 @@ public class SocialItem {
     private static final String POCKETWATCH_SOCIAL_ITEM_IMAGES_WIDTH = "width";
     private static final String POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT = "height";
 
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_LOW_QUALITY = "low_quality";
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_HIGH_QUALITY = "high_quality";
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_EMBED = "embed";
+
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_TYPE = "type";
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_SOURCE = "source";
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_WIDTH = "width";
+    private static final String POCKETWATCH_SOCIAL_ITEM_VIDEOS_HEIGHT = "height";
+
+
     public static final class SocialItemImage {
         private String mUrl;
         private int mWidth;
@@ -61,6 +71,25 @@ public class SocialItem {
         public int getSocialItemImageHeight() { return mHeight; }
     }
 
+    public static final class SocialItemVideo {
+        private String mType;
+        private String mSource;
+        private int mWidth;
+        private int mHeight;
+
+        public SocialItemVideo(String type, String source, int width, int height) {
+            this.mType = type;
+            this.mSource = source;
+            this.mWidth = width;
+            this.mHeight = height;
+        }
+
+        public String getSocialItemVideoType() { return mType; }
+        public String getSocialItemVideoUrl() { return mSource; }
+        public int getSocialItemVideoWidth() { return mWidth; }
+        public int getSocialItemVideoHeight() { return mHeight; }
+    }
+
     private int mId;
     private String mUuid;
     private int mEpisodeId;
@@ -72,9 +101,11 @@ public class SocialItem {
     private String mPermalink;
     private JSONObject mImages;
     private HashMap<String, SocialItemImage> mSocialImageMap = new HashMap<String, SocialItemImage>();
+    private HashMap<String, SocialItemVideo> mSocialVideoMap = new HashMap<String, SocialItemVideo>();
     private JSONObject mVideos;
     private String mTimeStamp;
     private boolean mImagesPopulated = false;
+    private boolean mVideosPopulated = false;
 
     public int getId() {
         return mId;
@@ -101,7 +132,10 @@ public class SocialItem {
 
         if (mProvider.equals(Constants.SOCIAL_ITEM_PROVIDER_INSTAGRAM))
             provider = Constants.SOCIAL_ITEMS_PROVIDER.INSTAGRAM;
-        //XXX: TODO add remaining providers
+        else if (mProvider.equals(Constants.SOCIAL_ITEM_PROVIDER_TWITTER))
+            provider = Constants.SOCIAL_ITEMS_PROVIDER.TWITTER;
+        else if (mProvider.equals(Constants.SOCIAL_ITEM_PROVIDER_VINE))
+            provider = Constants.SOCIAL_ITEMS_PROVIDER.VINE;
 
         return provider;
     }
@@ -175,6 +209,75 @@ public class SocialItem {
         return mSocialImageMap.get(POCKETWATCH_SOCIAL_ITEM_IMAGES_STANDARD);
     }
 
+    public SocialItemVideo getLowQualityVideo() {
+        populateSocialItemVideos(mVideos);
+        return mSocialVideoMap.get(POCKETWATCH_SOCIAL_ITEM_VIDEOS_LOW_QUALITY);
+    }
+
+    public SocialItemVideo getHighQualityVideo() {
+        populateSocialItemVideos(mVideos);
+        return mSocialVideoMap.get(POCKETWATCH_SOCIAL_ITEM_VIDEOS_HIGH_QUALITY);
+    }
+
+    public SocialItemVideo getEmbedVideo() {
+        populateSocialItemVideos(mVideos);
+        return mSocialVideoMap.get(POCKETWATCH_SOCIAL_ITEM_VIDEOS_EMBED);
+    }
+
+    private void populateSocialItemVideos(JSONObject json) {
+        final String func = "populateSocialItemVideos()";
+        JSONObject videoObject = null;
+
+        if (mVideosPopulated)
+            return;
+
+        Utils.Entry(TAG, func);
+
+        try {
+            if (null != (videoObject = Utils.getJsonObject(json, POCKETWATCH_SOCIAL_ITEM_VIDEOS_LOW_QUALITY))) {
+                String type = Utils.getJsonString(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_TYPE);
+                String url = Utils.getJsonString(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_SOURCE);
+                int width = Utils.getJsonInt(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_WIDTH);
+                int height = Utils.getJsonInt(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_HEIGHT);
+
+                if (!Utils.isEmpty(url)) {
+                    Utils.Debug(TAG, func, "Populated low quality video: " + url);
+                    mSocialVideoMap.put(POCKETWATCH_SOCIAL_ITEM_VIDEOS_LOW_QUALITY, new SocialItemVideo(type, url, width, height));
+                }
+            }
+
+            if (null != (videoObject = Utils.getJsonObject(json, POCKETWATCH_SOCIAL_ITEM_VIDEOS_HIGH_QUALITY))) {
+                String type = Utils.getJsonString(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_TYPE);
+                String url = Utils.getJsonString(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_SOURCE);
+                int width = Utils.getJsonInt(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_WIDTH);
+                int height = Utils.getJsonInt(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_HEIGHT);
+
+                if (!Utils.isEmpty(url)) {
+                    Utils.Debug(TAG, func, "Populated high quality video: " + url);
+                    mSocialVideoMap.put(POCKETWATCH_SOCIAL_ITEM_VIDEOS_HIGH_QUALITY, new SocialItemVideo(type, url, width, height));
+                }
+            }
+
+            if (null != (videoObject = Utils.getJsonObject(json, POCKETWATCH_SOCIAL_ITEM_VIDEOS_EMBED))) {
+                String type = Utils.getJsonString(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_TYPE);
+                String url = Utils.getJsonString(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_SOURCE);
+                int width = Utils.getJsonInt(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_WIDTH);
+                int height = Utils.getJsonInt(videoObject, POCKETWATCH_SOCIAL_ITEM_VIDEOS_HEIGHT);
+
+                if (!Utils.isEmpty(url)) {
+                    Utils.Debug(TAG, func, "Populated embedded video: " + url);
+                    mSocialVideoMap.put(POCKETWATCH_SOCIAL_ITEM_VIDEOS_EMBED, new SocialItemVideo(type, url, width, height));
+                }
+            }
+
+            mVideosPopulated = true;
+
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+    }
+
+
     private void populateSocialItemImages(JSONObject json) {
         final String func = "populateSocialItemImages()";
         JSONObject imageObject = null;
@@ -191,7 +294,7 @@ public class SocialItem {
                 int height = Utils.getJsonInt(imageObject, POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT);
 
                 if (!Utils.isEmpty(url)) {
-                    Utils.Debug(TAG, func, "Populated Avatar. Width: " + width + " Height: " + height);
+                    Utils.Debug(TAG, func, "Populated Avatar. Width: " + width + " Height: " + height + " Url: " + url);
                     mSocialImageMap.put(POCKETWATCH_SOCIAL_ITEM_IMAGES_AVATAR, new SocialItemImage(url, width, height));
                 }
             }
@@ -202,7 +305,7 @@ public class SocialItem {
                 int height = Utils.getJsonInt(imageObject, POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT);
 
                 if (!Utils.isEmpty(url)) {
-                    Utils.Debug(TAG, func, "Populated Thumbnail. Width: " + width + " Height: " + height);
+                    Utils.Debug(TAG, func, "Populated Thumbnail. Width: " + width + " Height: " + height + " Url: " + url);
                     mSocialImageMap.put(POCKETWATCH_SOCIAL_ITEM_IMAGES_THUMBNAIL, new SocialItemImage(url, width, height));
                 }
             }
@@ -213,7 +316,7 @@ public class SocialItem {
                 int height = Utils.getJsonInt(imageObject, POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT);
 
                 if (!Utils.isEmpty(url)) {
-                    Utils.Debug(TAG, func, "Populated Small. Width: " + width + " Height: " + height);
+                    Utils.Debug(TAG, func, "Populated Small. Width: " + width + " Height: " + height + " Url: " + url);
                     mSocialImageMap.put(POCKETWATCH_SOCIAL_ITEM_IMAGES_SMALL, new SocialItemImage(url, width, height));
                 }
             }
@@ -224,7 +327,7 @@ public class SocialItem {
                 int height = Utils.getJsonInt(imageObject, POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT);
 
                 if (!Utils.isEmpty(url)) {
-                    Utils.Debug(TAG, func, "Populated Medium. Width: " + width + " Height: " + height);
+                    Utils.Debug(TAG, func, "Populated Medium. Width: " + width + " Height: " + height + " Url: " + url);
                     mSocialImageMap.put(POCKETWATCH_SOCIAL_ITEM_IMAGES_MEDIUM, new SocialItemImage(url, width, height));
                 }
             }
@@ -235,7 +338,7 @@ public class SocialItem {
                 int height = Utils.getJsonInt(imageObject, POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT);
 
                 if (!Utils.isEmpty(url)) {
-                    Utils.Debug(TAG, func, "Populated Large. Width: " + width + " Height: " + height);
+                    Utils.Debug(TAG, func, "Populated Large. Width: " + width + " Height: " + height + " Url: " + url);
                     mSocialImageMap.put(POCKETWATCH_SOCIAL_ITEM_IMAGES_LARGE, new SocialItemImage(url, width, height));
                 }
             }
@@ -246,7 +349,7 @@ public class SocialItem {
                 int height = Utils.getJsonInt(imageObject, POCKETWATCH_SOCIAL_ITEM_IMAGES_HEIGHT);
 
                 if (!Utils.isEmpty(url)) {
-                    Utils.Debug(TAG, func, "Populated Standard. Width: " + width + " Height: " + height);
+                    Utils.Debug(TAG, func, "Populated Standard. Width: " + width + " Height: " + height + " Url: " + url);
                     mSocialImageMap.put(POCKETWATCH_SOCIAL_ITEM_IMAGES_STANDARD, new SocialItemImage(url, width, height));
                 }
             }
@@ -272,6 +375,7 @@ public class SocialItem {
                     SocialItem socialItem = getSocialItem((JSONObject) jar.get(i));
                     if(socialItem != null){
                         list.add(socialItem);
+                        Utils.Debug(TAG, func, "Provider: " + socialItem.getProvider());
                     }
                 }
             } catch (Exception e){

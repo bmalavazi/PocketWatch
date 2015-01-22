@@ -3,7 +3,8 @@
     android:id="@+id/social"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="20dp">
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp">
 
     <RelativeLayout
         android:id="@+id/social_header"
@@ -13,13 +14,16 @@
         android:paddingRight="16dp"
         android:layout_marginBottom="20dp">
 
-        <com.pocketwatch.demo.ui.CircleImageView
+        <ImageView
             android:id="@+id/social_avatar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:maxWidth="200dp"
+            android:maxHeight="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/thumb_placeholder"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -54,10 +58,20 @@
         android:id="@+id/social_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxWidth="480dp"
+        android:maxHeight="480dp"
         android:layout_below="@id/social_header"
         android:layout_marginTop="20dp"
         android:scaleType="centerCrop"
         android:src="@drawable/thumb_placeholder"
-        android:layout_centerHorizontal="true"/>
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
+<!--
+    <VideoView
+        android:id="@+id/social_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/social_image"
+        android:layout_gravity="center_horizontal"/>
+-->
 </RelativeLayout>

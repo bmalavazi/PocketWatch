@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -20,6 +22,7 @@ import com.pocketwatch.demo.adapters.EpisodeAdapter;
 import com.pocketwatch.demo.models.Episode;
 import com.pocketwatch.demo.models.Show;
 import com.pocketwatch.demo.utils.Calendar;
+import com.pocketwatch.demo.utils.HttpPostTask;
 import com.pocketwatch.demo.utils.HttpRequestTask;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
@@ -277,5 +280,32 @@ public class ShowActivity extends Activity {
 */
 
         Utils.Exit(TAG, func);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_subscribe, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final String func = "onOptionsItemSelected()";
+        int id = item.getItemId();
+
+        Utils.Entry(TAG, func);
+
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_subscribe:
+                Utils.Debug(TAG, func, "Subscribing to show with UUID: " + mUuid);
+                new HttpPostTask().execute(Utils.subscribe(mUuid));
+                return true;
+        }
+
+        Utils.Exit(TAG, func);
+
+        return super.onOptionsItemSelected(item);
     }
 }

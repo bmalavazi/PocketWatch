@@ -8,6 +8,7 @@ import android.os.IBinder;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.pocketwatch.demo.Constants;
 import com.pocketwatch.demo.Preferences;
+import com.pocketwatch.demo.utils.HttpPostTask;
 import com.pocketwatch.demo.utils.Utils;
 
 import java.io.IOException;
@@ -33,7 +34,10 @@ public class MessageReceivingService extends Service {
         mRegistrationId = Preferences.getRegistrationId(getApplicationContext());
 
         if (Utils.isEmpty(mRegistrationId)) {
+            Utils.Debug(TAG, func, "Registering Device with GCM");
             register();
+        } else {
+            Utils.Debug(TAG, func, "Device already registered with GCM");
         }
 
         Utils.Exit(TAG, func);
@@ -51,6 +55,7 @@ public class MessageReceivingService extends Service {
                     mRegistrationId = mGcm.register(SENDER_ID);
                     Utils.Debug(TAG, func, "Current Device's Registration ID is: " + mRegistrationId);
                     Preferences.setRegistrationId(getApplicationContext(), mRegistrationId);
+                    new HttpPostTask().execute(Utils.registerDevice(mRegistrationId));
                 } catch (IOException ex) {
                     Utils.Debug(TAG, func, "Registration ID Error:" + ex.getMessage());
                 }

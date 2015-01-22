@@ -43,11 +43,16 @@ public class Utils {
     private static final String POCKETWATCH_API_SOCIAL_ITEMS = POCKETWATCH_API_BASE + "episodes/%s/social_items";
     private static final String POCKETWATCH_API_THUMBNAIL = POCKETWATCH_API_URL + "/%s";
     private static final String POCKETWATCH_API_USERS = "users/";
+    private static final String POCKETWATCH_API_REGISTER_DEVICE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "register_device";
+    private static final String POCKETWATCH_API_UNREGISTER_DEVICE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "unregister_device";
     private static final String POCKETWATCH_API_SUBSCRIPTIONS = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "subscriptions";
     private static final String POCKETWATCH_API_SUBSCRIBE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "subscribe";
     private static final String POCKETWATCH_API_UNSUBSCRIBE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "unsubscribe";
+    private static final String POCKETWATCH_API_PUSH_SUBSCRIBE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "subscribe_to_push_notifications";
+    private static final String POCKETWATCH_API_PUSH_UNSUBSCRIBE = POCKETWATCH_API_BASE + POCKETWATCH_API_USERS + "unsubscribe_from_push_notifications";
     private static final String POCKETWATCH_API_API_KEY = "api_key=" + Constants.POCKETWATCH_API_KEY;
-    private static final String POCKETWATCH_API_SHOW_ID = "show_id=";
+    private static final String POCKETWATCH_API_DEVICE_ID = "device_id=%s";
+    private static final String POCKETWATCH_API_SHOW_ID = "show_id=%s";
     private static final String POCKETWATCH_API_FIRST_ARG = "?";
     private static final String POCKETWATCH_API_DELIMITER_ARG = "&";
 
@@ -147,6 +152,45 @@ public class Utils {
 
     public static String getSubscriptions() {
         return POCKETWATCH_API_SUBSCRIPTIONS + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY;
+    }
+
+    public static String registerDevice(String id) {
+        String url = POCKETWATCH_API_REGISTER_DEVICE + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY + POCKETWATCH_API_DELIMITER_ARG + POCKETWATCH_API_DEVICE_ID;
+        url = String.format(url, id);
+
+        return url;
+    }
+
+    public static String unregisterDevice() {
+        return POCKETWATCH_API_UNREGISTER_DEVICE + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY;
+    }
+
+    public static String subscribe(String uuid) {
+        String url = POCKETWATCH_API_SUBSCRIBE + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY + POCKETWATCH_API_DELIMITER_ARG + POCKETWATCH_API_SHOW_ID;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String unsubscribe(String uuid) {
+        String url = POCKETWATCH_API_UNSUBSCRIBE + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY + POCKETWATCH_API_DELIMITER_ARG + POCKETWATCH_API_SHOW_ID;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String subscribePush(String uuid) {
+        String url = POCKETWATCH_API_PUSH_SUBSCRIBE + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY + POCKETWATCH_API_DELIMITER_ARG + POCKETWATCH_API_SHOW_ID;
+        url = String.format(url, uuid);
+
+        return url;
+    }
+
+    public static String unsubscribePush(String uuid) {
+        String url = POCKETWATCH_API_PUSH_UNSUBSCRIBE + POCKETWATCH_API_FIRST_ARG + POCKETWATCH_API_API_KEY + POCKETWATCH_API_DELIMITER_ARG + POCKETWATCH_API_SHOW_ID;
+        url = String.format(url, uuid);
+
+        return url;
     }
 
     /*

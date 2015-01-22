@@ -31,19 +31,30 @@
         <activity android:name="com.pocketwatch.demo.ui.EpisodeActivity"
                   android:screenOrientation="portrait">
         </activity>
+
+        <service
+            android:name="com.pocketwatch.demo.services.MessageReceivingService"
+            android:label="com.pocketwatch.demo.services.MessageReceivingService" >
+            <intent-filter>
+                <action android:name="com.pocketwatch.demo.ui.HomeActivity" />
+                <action android:name="com.pocketwatch.demo.receiver.ExternalReceiver" />
+                <category android:name="com.pocketwatch.demo" />
+            </intent-filter>
+        </service>
+
         <receiver
-            android:name="com.pocketwatch.demo.receivers.GcmBroadcastReceiver"
+            android:name="com.pocketwatch.demo.receivers.ExternalReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.pocketwatch.demo" />
-
-                <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.google.android.c2dm.intent.REGISTER" />
+                <action android:name="com.pocketwatch.demo.intent.TEST"/>
+
                 <category android:name="com.pocketwatch.demo" />
             </intent-filter>
         </receiver>
-        <service android:name="com.pocketwatch.demo.services.GcmIntentService" />
+
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>

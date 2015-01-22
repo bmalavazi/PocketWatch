@@ -50,6 +50,7 @@ public class ShowsFragment extends BaseTabFragment {
     private BannerPagerAdapter<ImageView> mPagerAdapter;
     private Timer mPagerTimer;
     private BannerTimer mBannerTimer;
+    private Object mSync = new Object();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,10 @@ public class ShowsFragment extends BaseTabFragment {
     public void onPause() {
         super.onPause();
 
-        mBannerTimer.cancel();
-        mPagerTimer.cancel();
+        synchronized (mSync) {
+            mBannerTimer.cancel();
+            mPagerTimer.cancel();
+        }
     }
 
     @Override
@@ -108,9 +111,14 @@ public class ShowsFragment extends BaseTabFragment {
                 mCarousel.setAdapter(mPagerAdapter);
                 mPagerAdapter.notifyDataSetChanged();
 
-                mPagerTimer.schedule(mBannerTimer,
-                                     Constants.BANNER_SCROLL_FREQUENCY,
-                                     Constants.BANNER_SCROLL_FREQUENCY);
+                synchronized (mSync) {
+                    mPagerTimer.schedule(mBannerTimer,
+                            Constants.BANNER_SCROLL_FREQUENCY,
+                            Constants.BANNER_SCROLL_FREQUENCY);
+                }
+
+                //Intent intent = new Intent("com.pocketwatch.demo.intent.TEST");
+                //getActivity().sendBroadcast(intent);
 
             }
         }).execute(Utils.getFeaturedShows());
@@ -216,16 +224,18 @@ public class ShowsFragment extends BaseTabFragment {
 
         @Override
         public void run() {
-            getActivity().runOnUiThread(new Runnable() {
+            synchronized (mSync) {
+                getActivity().runOnUiThread(new Runnable() {
 
-                @Override
-                public void run() {
-                    int maxCount = mPagerAdapter.getCount();
+                    @Override
+                    public void run() {
+                        int maxCount = mPagerAdapter.getCount();
 
-                    if (maxCount > 0)
-                        mCarousel.setCurrentItem((mPage++ % maxCount), true);
-                }
-            });
+                        if (maxCount > 0)
+                            mCarousel.setCurrentItem((mPage++ % maxCount), true);
+                    }
+                });
+            }
         }
     }
 

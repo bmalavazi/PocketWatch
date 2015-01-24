@@ -51,6 +51,7 @@ public class ShowsFragment extends BaseTabFragment {
     private Timer mPagerTimer;
     private BannerTimer mBannerTimer;
     private Object mSync = new Object();
+    private boolean mTimerCancelled = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class ShowsFragment extends BaseTabFragment {
         synchronized (mSync) {
             mBannerTimer.cancel();
             mPagerTimer.cancel();
+            mTimerCancelled = true;
         }
     }
 
@@ -112,9 +114,12 @@ public class ShowsFragment extends BaseTabFragment {
                 mPagerAdapter.notifyDataSetChanged();
 
                 synchronized (mSync) {
-                    mPagerTimer.schedule(mBannerTimer,
-                            Constants.BANNER_SCROLL_FREQUENCY,
-                            Constants.BANNER_SCROLL_FREQUENCY);
+                    if (!mTimerCancelled) {
+                        mPagerTimer.schedule(mBannerTimer,
+                                Constants.BANNER_SCROLL_FREQUENCY,
+                                Constants.BANNER_SCROLL_FREQUENCY);
+                        mTimerCancelled = false;
+                    }
                 }
 
                 //Intent intent = new Intent("com.pocketwatch.demo.intent.TEST");

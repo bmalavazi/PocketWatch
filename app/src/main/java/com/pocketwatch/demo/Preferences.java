@@ -94,11 +94,13 @@ public class Preferences {
             uuids = new TreeSet<String>();
         }
 
-        uuids.add(uuid);
+        if (!uuids.contains(uuid)) {
+            uuids.add(uuid);
 
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, uuids);
-        editor.commit();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, uuids);
+            editor.commit();
+        }
 
         Utils.Exit(TAG, func);
     }
@@ -111,12 +113,78 @@ public class Preferences {
         SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, null);
 
-        uuids.remove(uuid);
+        if (null == uuids) {
+            Utils.Exit(TAG, func, "Uuids is null");
+            return;
+        }
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, uuids);
         editor.commit();
 
         Utils.Exit(TAG, func);
+    }
+
+    public static void setSubscriptionsPush(Context context, String uuid) {
+        final String func = "setSubscriptionsPush()";
+
+        Utils.Entry(TAG, func, "UUID: " + uuid);
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS_PUSH, null);
+
+        if (null == uuids) {
+            uuids = new TreeSet<String>();
+        }
+
+        if (!uuids.contains(uuid)) {
+            uuids.add(uuid);
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS_PUSH, uuids);
+            editor.commit();
+        }
+
+        Utils.Exit(TAG, func);
+    }
+
+    public static void removeSubscriptionsPush(Context context, String uuid) {
+        final String func = "removeSubscriptionsPush()";
+
+        Utils.Entry(TAG, func, "UUID: " + uuid);
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS_PUSH, null);
+
+        if (null == uuids) {
+            Utils.Exit(TAG, func, "Uuids is null");
+            return;
+        }
+
+        uuids.remove(uuid);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS_PUSH, uuids);
+        editor.commit();
+
+        Utils.Exit(TAG, func);
+    }
+
+    public static boolean isSubscriptionsPush(Context context, String uuid) {
+        final String func = "isSubscriptionsPush()";
+
+        Utils.Entry(TAG, func, "UUID: " + uuid);
+
+        SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        Set<String> uuids = preferences.getStringSet(Constants.APP_SHOW_SUBSCRIPTIONS_PUSH, null);
+
+        if (null != uuids && uuids.contains(uuid)) {
+            Utils.Exit(TAG, func, "Found UUID: " + uuid);
+            return true;
+        }
+
+        Utils.Exit(TAG, func, "UUID: " + uuid + " not found");
+
+        return false;
     }
 }

@@ -14,6 +14,7 @@ import android.widget.VideoView;
 import com.pocketwatch.demo.Constants;
 import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.models.SocialItem;
+import com.pocketwatch.demo.models.SocialItem.SocialItemVideo;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 
@@ -72,8 +73,8 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
 
             viewHolder = new ViewHolder();
             viewHolder.avatar = (ImageView) convertView.findViewById(R.id.social_avatar);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.social_image);
-            //viewHolder.video = (VideoView) convertView.findViewById(R.id.social_video);
+            //viewHolder.image = (ImageView) convertView.findViewById(R.id.social_image);
+            viewHolder.video = (VideoView) convertView.findViewById(R.id.social_video);
             viewHolder.creator = (TextView) convertView.findViewById(R.id.social_creator);
             viewHolder.content = (TextView) convertView.findViewById(R.id.social_content);
 
@@ -112,13 +113,25 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
                               ImageLoader.getCache(),
                               R.drawable.thumb_placeholder);
 
-
         if (Constants.SOCIAL_ITEMS_PROVIDER.VINE == socialItem.getProviderEnum()) {
-            if (null != getVideoUrl(socialItem)) {
-                viewHolder.image.setOnClickListener(new AddVideoLink(socialItem));
+            SocialItemVideo socialItemVideo;
+
+            if (null != (socialItemVideo = getVideo(socialItem))) {
+                //MediaController mController = new MediaController(mContext);
+
+                //mController.show();
+                //mVideoView.start();
+                //viewHolder.image.setOnClickListener(new AddVideoLink(socialItem));
+                viewHolder.video.setVideoURI(Uri.parse(socialItemVideo.getSocialItemVideoUrl()));
+                //viewHolder.video.setMediaController(new MediaController(mContext));
+                viewHolder.video.requestFocus();
+
+                new Thread(new PlayThread(viewHolder.video)).run();
+
+                //viewHolder.video.start();
             }
         }
-
+/*
         imgUrls = getImageUrlList(socialItem);
 
         if (null != imgUrls && !imgUrls.isEmpty()) {
@@ -127,10 +140,25 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
                                   ImageLoader.getCache(),
                                   R.drawable.tile_placeholder);
         }
-
+*/
         Utils.Exit(TAG, func);
 
         return convertView;
+    }
+
+    private class PlayThread implements Runnable {
+        VideoView mVideo;
+
+        PlayThread(VideoView view) {
+            mVideo = view;
+        }
+
+        @Override
+        public void run() {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_DISPLAY);
+            mVideo.start();
+            mVideo.requestLayout();
+        }
     }
 
     private ArrayList<String> getImageUrlList(SocialItem socialItem) {
@@ -155,20 +183,20 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
         return imgUrls;
     }
 
-    private String getVideoUrl(SocialItem socialItem) {
-        final String func = "getVideoUrl()";
-        String videoUrl = null;
+    private SocialItemVideo getVideo(SocialItem socialItem) {
+        final String func = "getVideo()";
+        SocialItemVideo videoUrl = null;
 
         Utils.Entry(TAG, func);
 
         if (null != socialItem.getHighQualityVideo())
-            videoUrl = socialItem.getHighQualityVideo().getSocialItemVideoUrl();
+            videoUrl = socialItem.getHighQualityVideo();
         else if (null != socialItem.getLowQualityVideo())
-            videoUrl = socialItem.getLowQualityVideo().getSocialItemVideoUrl();
+            videoUrl = socialItem.getLowQualityVideo();
         else if (null != socialItem.getMediumImage())
-            videoUrl = socialItem.getEmbedVideo().getSocialItemVideoUrl();
+            videoUrl = socialItem.getEmbedVideo();
 
-        Utils.Exit(TAG, func, videoUrl);
+        Utils.Exit(TAG, func, videoUrl.getSocialItemVideoUrl());
 
         return videoUrl;
     }
@@ -182,7 +210,7 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
 
         @Override
         public void onClick(View view) {
-            Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(getVideoUrl(mSocialItem)));
+            Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(getVideo(mSocialItem).getSocialItemVideoUrl()));
             mContext.startActivity(in);
         }
     }

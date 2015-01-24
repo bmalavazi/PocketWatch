@@ -2,6 +2,8 @@ package com.pocketwatch.demo.utils;
 
 import android.os.AsyncTask;
 
+import com.pocketwatch.demo.Callbacks.HttpPostCallback;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -15,6 +17,11 @@ import java.io.IOException;
  */
 public class HttpPostTask extends AsyncTask<String, Integer, JSONObject> {
     private static final String TAG = "HttpPostTask";
+    private HttpPostCallback mCallback;
+
+    public HttpPostTask(HttpPostCallback callback) {
+        mCallback = callback;
+    }
 
     @Override
     protected JSONObject doInBackground(String... uri) {
@@ -39,5 +46,11 @@ public class HttpPostTask extends AsyncTask<String, Integer, JSONObject> {
         Utils.Exit(TAG, func);
 
         return json;
+    }
+
+    @Override
+    protected void onPostExecute(JSONObject jsonObject) {
+        super.onPostExecute(jsonObject);
+        mCallback.callback();
     }
 }

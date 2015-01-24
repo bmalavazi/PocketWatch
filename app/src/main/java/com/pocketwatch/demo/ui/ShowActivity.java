@@ -16,6 +16,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.pocketwatch.demo.Callbacks.HttpPostCallback;
 import com.pocketwatch.demo.Callbacks.JsonCallback;
 import com.pocketwatch.demo.Preferences;
 import com.pocketwatch.demo.R;
@@ -303,33 +304,51 @@ public class ShowActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         final String func = "onOptionsItemSelected()";
         int id = item.getItemId();
+        final Object sync = new Object();
 
         Utils.Entry(TAG, func);
 
         switch (id) {
             case R.id.action_settings:
+                Utils.Exit(TAG, func, "Action Settings");
                 return true;
             case R.id.action_subscribe:
             case R.id.action_unsubscribe:
                 if (!Utils.isSubscribed(this, mUuid)) {
                     Utils.Debug(TAG, func, "Subscribing to show with UUID: " + mUuid);
-                    new HttpPostTask().execute(Utils.subscribe(mUuid));
-                    Preferences.setSubscriptions(this, mUuid);
-                    item.setTitle(getResources().getString(R.string.action_unsubscribe));
+                    new HttpPostTask(new HttpPostCallback() {
+
+                        @Override
+                        public void callback() {
+                            synchronized (sync) {
+                                Preferences.setSubscriptions(ShowActivity.this, mUuid);
+                                item.setTitle(getResources().getString(R.string.action_unsubscribe));
+                            }
+                        }
+                    }).execute(Utils.subscribe(mUuid));
+
                 } else {
                     Utils.Debug(TAG, func, "Unsubscribing to show with UUID: " + mUuid);
-                    new HttpPostTask().execute(Utils.unsubscribe(mUuid));
-                    Preferences.removeSubscriptions(this, mUuid);
-                    item.setTitle(getResources().getString(R.string.action_subscribe));
+                    new HttpPostTask(new HttpPostCallback() {
+
+                        @Override
+                        public void callback() {
+                            synchronized (sync) {
+                                Preferences.removeSubscriptions(ShowActivity.this, mUuid);
+                                item.setTitle(getResources().getString(R.string.action_subscribe));
+                            }
+                        };
+                    }).execute(Utils.unsubscribe(mUuid));
                 }
 
+                Utils.Exit(TAG, func, "Subscribe/Unsubscribe");
                 return true;
         }
 
-        Utils.Exit(TAG, func);
+        Utils.Exit(TAG, func, "No match");
 
         return super.onOptionsItemSelected(item);
     }

@@ -122,6 +122,8 @@ public class Preferences {
         editor.putStringSet(Constants.APP_SHOW_SUBSCRIPTIONS, uuids);
         editor.commit();
 
+        removeSubscriptionsPush(context, uuid);
+
         Utils.Exit(TAG, func);
     }
 

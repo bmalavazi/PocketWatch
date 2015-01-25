@@ -44,8 +44,10 @@ public class EpisodeActivity extends FragmentActivity implements FragmentTabHost
 
         setContentView(R.layout.episode_activity);
 
-        mUuid = getIntent().getExtras().getString(EPISODE_UUID);
-        ArrayList<String> tabArray = getIntent().getExtras().getStringArrayList(EPISODE_TABS);
+        Bundle extras = getIntent().getExtras();
+
+        mUuid = extras.getString(EPISODE_UUID);
+        ArrayList<String> tabArray = extras.getStringArrayList(EPISODE_TABS);
 
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
 

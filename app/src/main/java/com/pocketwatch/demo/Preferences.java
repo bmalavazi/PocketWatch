@@ -64,7 +64,7 @@ public class Preferences {
         SharedPreferences preferences = context.getSharedPreferences(Constants.APP_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         int id = preferences.getInt(Constants.GCM_NOTIFICATION_ID, 0);
 
-        Utils.Exit(TAG, func, "Registration ID: " + id);
+        Utils.Exit(TAG, func, "Notification ID: " + id);
 
         return id;
     }

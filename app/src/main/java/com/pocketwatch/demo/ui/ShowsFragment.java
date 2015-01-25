@@ -81,6 +81,7 @@ public class ShowsFragment extends BaseTabFragment {
     @Override
     public void onResume() {
         super.onResume();
+        final String func = "onResume()";
 
         mPagerTimer = new Timer();
         mBannerTimer = new BannerTimer();

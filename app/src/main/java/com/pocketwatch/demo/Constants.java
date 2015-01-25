@@ -32,4 +32,8 @@ public class Constants {
     public static final String GCM_NOTIFICATION_ID = "GCM_NOTIFICATION_ID";
     public static final String APP_SHOW_SUBSCRIPTIONS = "APP_SHOW_SUBSCRIPTIONS";
     public static final String APP_SHOW_SUBSCRIPTIONS_PUSH = "APP_SHOW_SUBSCRIPTIONS_PUSH";
+
+    public static final String APP_PUSH_METADATA = "metadata";
+    public static final String APP_PUSH_MESSAGE = "message";
+
 }

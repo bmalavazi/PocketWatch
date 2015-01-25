@@ -73,7 +73,7 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
 
             viewHolder = new ViewHolder();
             viewHolder.avatar = (ImageView) convertView.findViewById(R.id.social_avatar);
-            //viewHolder.image = (ImageView) convertView.findViewById(R.id.social_image);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.social_image);
             viewHolder.video = (VideoView) convertView.findViewById(R.id.social_video);
             viewHolder.creator = (TextView) convertView.findViewById(R.id.social_creator);
             viewHolder.content = (TextView) convertView.findViewById(R.id.social_content);
@@ -131,7 +131,7 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
                 //viewHolder.video.start();
             }
         }
-/*
+
         imgUrls = getImageUrlList(socialItem);
 
         if (null != imgUrls && !imgUrls.isEmpty()) {
@@ -140,7 +140,7 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
                                   ImageLoader.getCache(),
                                   R.drawable.tile_placeholder);
         }
-*/
+
         Utils.Exit(TAG, func);
 
         return convertView;

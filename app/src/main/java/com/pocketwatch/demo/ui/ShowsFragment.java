@@ -91,6 +91,7 @@ public class ShowsFragment extends BaseTabFragment {
             public void setJsonObject(JSONObject json) {
                 Log.d(TAG, "setJsonObject()");
                 mFeaturedAdapter.clear();
+                mPagerList.clear();
                 mFeaturedList = Show.getShows(json);
                 for (Show show : mFeaturedList) {
                     mFeaturedAdapter.add(show);
@@ -117,8 +118,8 @@ public class ShowsFragment extends BaseTabFragment {
                 synchronized (mSync) {
                     if (null != mPagerTimer && null != mBannerTimer) {
                         mPagerTimer.schedule(mBannerTimer,
-                                Constants.BANNER_SCROLL_FREQUENCY,
-                                Constants.BANNER_SCROLL_FREQUENCY);
+                                             Constants.BANNER_SCROLL_FREQUENCY,
+                                             Constants.BANNER_SCROLL_FREQUENCY);
                     }
                 }
 

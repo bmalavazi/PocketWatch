@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pocketwatch.demo.models.Product;
 import com.pocketwatch.demo.R;
+import com.pocketwatch.demo.models.Product;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 
@@ -83,10 +83,12 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Utils.Debug(TAG, func, "Store Name: " + product.getStoreName());
         viewHolder.title.setText(product.getName());
         viewHolder.store.setText("By " + product.getStoreName());
-        viewHolder.store.setOnClickListener(new AddPurchaseLink(product));
 
         Utils.Debug(TAG, func, "Price: " + product.getPrice());
         viewHolder.price.setText(product.getPrice());
+        viewHolder.price.setBackground(mContext.getResources().getDrawable(R.drawable.price_drawable));
+        viewHolder.price.setPadding(10, 10, 10, 10);
+        viewHolder.price.setOnClickListener(new AddPurchaseLink(product));
 
         for (Product.ProductThumbnail thumbnail : product.getThumbnailList())
             imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));

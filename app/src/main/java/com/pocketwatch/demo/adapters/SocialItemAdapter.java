@@ -9,12 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
-import com.pocketwatch.demo.Constants;
 import com.pocketwatch.demo.R;
 import com.pocketwatch.demo.models.SocialItem;
 import com.pocketwatch.demo.models.SocialItem.SocialItemVideo;
+import com.pocketwatch.demo.ui.CircleImageView;
 import com.pocketwatch.demo.utils.ImageLoader;
 import com.pocketwatch.demo.utils.Utils;
 
@@ -36,11 +35,10 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
     }
 
     private class ViewHolder {
-        public ImageView avatar;
+        public CircleImageView avatar;
         public TextView creator;
         public TextView content;
         public ImageView image;
-        public VideoView video;
     }
 
     @Override
@@ -72,9 +70,8 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
             convertView = inflater.inflate(R.layout.social_item, viewGroup, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.avatar = (ImageView) convertView.findViewById(R.id.social_avatar);
+            viewHolder.avatar = (CircleImageView) convertView.findViewById(R.id.social_avatar);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.social_image);
-            viewHolder.video = (VideoView) convertView.findViewById(R.id.social_video);
             viewHolder.creator = (TextView) convertView.findViewById(R.id.social_creator);
             viewHolder.content = (TextView) convertView.findViewById(R.id.social_content);
 
@@ -82,55 +79,19 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-/*
-        switch (socialItem.getProviderEnum()) {
-            case VINE:
-                Utils.Debug(TAG, func, "Vine");
-                viewHolder.image.setVisibility(View.GONE);
-                viewHolder.video.setVisibility(View.VISIBLE);
-                break;
-            case TWITTER:
-                Utils.Debug(TAG, func, "Twitter");
-                viewHolder.image.setVisibility(View.VISIBLE);
-                viewHolder.video.setVisibility(View.GONE);
-                imgUrls = getImageUrlList(socialItem);
-                break;
-            case INSTAGRAM:
-                Utils.Debug(TAG, func, "Instagram");
-                viewHolder.image.setVisibility(View.VISIBLE);
-                viewHolder.video.setVisibility(View.GONE);
-                imgUrls = getImageUrlList(socialItem);
-                break;
-        }
-*/
+
         viewHolder.creator.setText(socialItem.getCreatorName());
         Utils.Debug(TAG, func, socialItem.getCreatorName());
         viewHolder.content.setText(socialItem.getContent());
         Utils.Debug(TAG, func, socialItem.getContent());
 
+        //viewHolder.avatar.setMinimumWidth(socialItem.getAvatarImage().getSocialItemImageWidth());
+        //viewHolder.avatar.setMinimumHeight(socialItem.getAvatarImage().getSocialItemImageHeight());
+
         ImageLoader.loadImage(viewHolder.avatar,
                               socialItem.getAvatarImage().getSocialItemImageUrl(),
                               ImageLoader.getCache(),
                               R.drawable.thumb_placeholder);
-
-        if (Constants.SOCIAL_ITEMS_PROVIDER.VINE == socialItem.getProviderEnum()) {
-            SocialItemVideo socialItemVideo;
-
-            if (null != (socialItemVideo = getVideo(socialItem))) {
-                //MediaController mController = new MediaController(mContext);
-
-                //mController.show();
-                //mVideoView.start();
-                //viewHolder.image.setOnClickListener(new AddVideoLink(socialItem));
-                viewHolder.video.setVideoURI(Uri.parse(socialItemVideo.getSocialItemVideoUrl()));
-                //viewHolder.video.setMediaController(new MediaController(mContext));
-                viewHolder.video.requestFocus();
-
-                new Thread(new PlayThread(viewHolder.video)).run();
-
-                //viewHolder.video.start();
-            }
-        }
 
         imgUrls = getImageUrlList(socialItem);
 
@@ -144,21 +105,6 @@ public class SocialItemAdapter extends ArrayAdapter<SocialItem> {
         Utils.Exit(TAG, func);
 
         return convertView;
-    }
-
-    private class PlayThread implements Runnable {
-        VideoView mVideo;
-
-        PlayThread(VideoView view) {
-            mVideo = view;
-        }
-
-        @Override
-        public void run() {
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_DISPLAY);
-            mVideo.start();
-            mVideo.requestLayout();
-        }
     }
 
     private ArrayList<String> getImageUrlList(SocialItem socialItem) {

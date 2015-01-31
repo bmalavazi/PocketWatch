@@ -23,7 +23,7 @@ public class CircleImageView extends ImageView {
 
     @Override
     public void setImageBitmap(Bitmap bm) {
-        Bitmap circleBitmap = ImageHelper.getRoundedCornerBitmap(bm, 100);
+        Bitmap circleBitmap = ImageHelper.getRoundedCornerBitmap(bm, 73);
 
         super.setImageBitmap(circleBitmap);
     }

@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  * Created by bmalavazi on 1/5/15.
  */
 public class BannerPagerAdapter<E> extends PagerAdapter {
+    private static final String TAG = "BannerPagerAdapter";
     private ArrayList<E> mViews = null;
     private ImageView [][] mImageViews;
     private Context mContext;
@@ -36,29 +38,29 @@ public class BannerPagerAdapter<E> extends PagerAdapter {
     @Override
     public Object instantiateItem(View view, int position) {
         E myView = mViews.get(position);
-        LinearLayout verticalLayout = new LinearLayout(mContext);
+        FrameLayout frameLayout = new FrameLayout(mContext);
         LinearLayout horizontalLayout = new LinearLayout(mContext);
 
         if (null != ((View)myView).getParent()) {
             ((ViewGroup) ((View)myView).getParent()).removeView((View)myView);
         }
 
-        verticalLayout.setOrientation(LinearLayout.VERTICAL);
+        //verticalLayout.setOrientation(LinearLayout.VERTICAL);
         horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
 
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT,
-                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+                                                     LayoutParams.MATCH_PARENT,
+                                                     Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
 
-        verticalLayout.addView((View) myView);
+        frameLayout.addView((View) myView);
 
         for (int i = 0; i < getCount(); i++) {
             if (i == position)
-                mImageViews[position][i].setImageDrawable(mContext.getResources().getDrawable(R.drawable.circle_shape_on));
+                mImageViews[position][i].setImageDrawable(mContext.getResources().getDrawable(R.drawable.rectangle_shape_on));
             else
-                mImageViews[position][i].setImageDrawable(mContext.getResources().getDrawable(R.drawable.circle_shape_off));
+                mImageViews[position][i].setImageDrawable(mContext.getResources().getDrawable(R.drawable.rectangle_shape_off));
 
-            mImageViews[position][i].setPadding(0, 0, 5, 0);
+            mImageViews[position][i].setPadding(5, 0, 5, 10);
 
             if (null != (mImageViews[position][i]).getParent()) {
                 ((ViewGroup) (mImageViews[position][i]).getParent()).removeView(mImageViews[position][i]);
@@ -67,17 +69,17 @@ public class BannerPagerAdapter<E> extends PagerAdapter {
         }
 
         horizontalLayout.setLayoutParams(layoutParams);
-        horizontalLayout.setGravity(Gravity.CENTER);
+        horizontalLayout.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
 
         if (null != horizontalLayout.getParent()) {
             ((ViewGroup) (horizontalLayout).getParent()).removeView(horizontalLayout);
         }
 
-        verticalLayout.addView(horizontalLayout);
+        frameLayout.addView(horizontalLayout);
 
-        ((ViewPager) view).addView((View) verticalLayout);
+        ((ViewPager) view).addView((View) frameLayout);
 
-        return verticalLayout;
+        return frameLayout;
     }
 
     @Override

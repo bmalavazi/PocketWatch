@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
@@ -71,8 +70,10 @@ public class ShowsFragment extends BaseTabFragment {
         super.onPause();
 
         synchronized (mSync) {
-            mBannerTimer.cancel();
-            mPagerTimer.cancel();
+            if (null != mBannerTimer)
+                mBannerTimer.cancel();
+            if (null != mPagerTimer)
+                mPagerTimer.cancel();
             mBannerTimer = null;
             mPagerTimer = null;
         }
@@ -96,30 +97,36 @@ public class ShowsFragment extends BaseTabFragment {
                 for (Show show : mFeaturedList) {
                     mFeaturedAdapter.add(show);
                     ArrayList<String> imgUrls = new ArrayList<String>();
-                    List<Show.ShowThumbnail> thumbnails = show.getBannerList();
-                    for (Show.ShowThumbnail thumbnail : thumbnails)
-                        imgUrls.add(Utils.getThumbnail(thumbnail.getThumbnailUrl()));
+                    List<Show.ShowThumbnail> banners = show.getBannerList();
+                    for (Show.ShowThumbnail banner : banners) {
+                        imgUrls.add(Utils.getThumbnail(banner.getThumbnailUrl()));
+                    }
+
                     ImageView imageView = new ImageView(getActivity());
-                    imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                    //imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    //                                                     ViewGroup.LayoutParams.MATCH_PARENT));
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    //imageView.setAdjustViewBounds(true);
+
                     ImageLoader.loadImage(imageView,
-                            imgUrls,
-                            ImageLoader.getCache(),
-                            R.drawable.thumb_placeholder);
+                                          imgUrls,
+                                          ImageLoader.getCache(),
+                                          R.drawable.thumb_placeholder);
+
                     mPagerList.add(imageView);
                 }
 
                 mFeaturedAdapter.notifyDataSetChanged();
-                mPagerAdapter = new BannerPagerAdapter<ImageView>(getActivity(), mPagerList);
-                mCarousel.setAdapter(mPagerAdapter);
-                mPagerAdapter.notifyDataSetChanged();
 
-                synchronized (mSync) {
-                    if (null != mPagerTimer && null != mBannerTimer) {
-                        mPagerTimer.schedule(mBannerTimer,
-                                             Constants.BANNER_SCROLL_FREQUENCY,
-                                             Constants.BANNER_SCROLL_FREQUENCY);
+                if (!mPagerList.isEmpty()) {
+                    mPagerAdapter = new BannerPagerAdapter<ImageView>(getActivity(), mPagerList, mCarousel);
+                    mCarousel.setAdapter(mPagerAdapter);
+
+                    synchronized (mSync) {
+                        if (null != mPagerTimer && null != mBannerTimer) {
+                            mPagerTimer.schedule(mBannerTimer,
+                                    Constants.BANNER_SCROLL_FREQUENCY,
+                                    Constants.BANNER_SCROLL_FREQUENCY);
+                        }
                     }
                 }
 

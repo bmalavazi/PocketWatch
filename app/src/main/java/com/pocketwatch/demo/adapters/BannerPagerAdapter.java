@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.pocketwatch.demo.Constants;
 import com.pocketwatch.demo.R;
 
 import java.util.ArrayList;
@@ -23,16 +24,27 @@ public class BannerPagerAdapter<E> extends PagerAdapter {
     private ArrayList<E> mViews = null;
     private ImageView [][] mImageViews;
     private Context mContext;
+    private ViewPager mPager;
 
-    public BannerPagerAdapter(Context context, ArrayList<E> pages) {
+    public BannerPagerAdapter(Context context, ArrayList<E> pages, ViewPager pager) {
         super();
         mViews = pages;
         mContext = context;
+        mPager = pager;
         mImageViews = new ImageView[getCount()][getCount()];
 
         for (int i = 0; i < getCount(); i++)
             for (int j = 0; j < getCount(); j++)
                 mImageViews[i][j] = new ImageView(mContext);
+    }
+
+    @Override
+    public void finishUpdate(ViewGroup container) {
+        mPager.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                                             (int) (container.getWidth() / Constants.BANNER_ASPECT_RATIO)));
+        mPager.requestLayout();
+
+        super.finishUpdate(container);
     }
 
     @Override
